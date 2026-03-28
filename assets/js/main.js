@@ -154,18 +154,41 @@
   const contactForm = $("#contact-form"),
     formMessages = $(".form-message");
   contactForm.validate({
+    rules: {
+      name: {
+        required: true,
+        minlength: 2,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      subject: {
+        required: true,
+        minlength: 3,
+      },
+      message: {
+        required: true,
+        minlength: 10,
+      },
+    },
     submitHandler: function (form) {
       $.ajax({
         type: "POST",
         url: form.action,
         data: $(form).serialize(),
+        dataType: "json",
       })
         .done(function (response) {
-          console.log(response);
+          const successMessage =
+            response && response.message
+              ? response.message
+              : "Message envoye avec succes.";
+
           formMessages
             .removeClass("error text-danger")
             .addClass("success text-success mt-3")
-            .text(response);
+            .text(successMessage);
           // Clear the form.
           form.reset();
         })
@@ -176,10 +199,13 @@
             .addClass("error text-danger mt-3");
           // Set the message text.
 
-          console.log(data.responseText);
+          const errorMessage =
+            data.responseJSON && data.responseJSON.message
+              ? data.responseJSON.message
+              : data.responseText;
 
-          if (data.responseText !== "") {
-            formMessages.text(data.responseText);
+          if (errorMessage !== "") {
+            formMessages.text(errorMessage);
           } else {
             formMessages.text(
               "Oops! An error occured and your message could not be sent."

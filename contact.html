@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Perez - Personal Portfolio HTML Template</title>
+    <title>Contact | Romaric BOMBADE</title>
     <meta name="AdsBot-Google" content="noindex follow" />
-    <meta name="description" content="Perez - Personal Portfolio HTML Template">
+    <meta name="description" content="Contacter Romaric BOMBADE pour un projet web, une solution metier, une mission full-stack ou une collaboration autour de l'IA appliquee.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Favicon -->
@@ -47,8 +47,7 @@
 
                     <!-- Link Start -->
                     <a href="contact.html"
-                        class="d-flex align-items-center flex-wrap fw-bold text-dark lh-1 contact-link">Let’s
-                        Talk
+                        class="d-flex align-items-center flex-wrap fw-bold text-dark lh-1 contact-link">Me contacter
                         <span class="animate-arrow-up">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -263,11 +262,7 @@
                     <div class="col-12 col-lg-6 mb-6" data-aos="fade-up">
                         <div class="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 mb-10">
                             <span class="text-warning text-xl">Contact</span>
-                            <h3 class="section-title text-white">
-                                <span class="position-relative circle-shape portfolio-shape">Le</span>t’s
-                                <br class="hidden d-lg-block" />
-                                connect
-                            </h3>
+                            <h3 class="section-title text-white"><span class="position-relative circle-shape portfolio-shape">Co</span>ntactez-<br class="hidden d-lg-block" />moi</h3>
                         </div>
 
 
@@ -287,8 +282,8 @@
 
                                 </span>
                                 <div class="d-flex flex-wrap flex-column flex-1">
-                                    <span class="paragraph leading-none">Email us</span>
-                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">hello@henry.com
+                                    <span class="paragraph leading-none">Email</span>
+                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">dromaric58@gmail.com
                                     </h5>
                                 </div>
                             </div>
@@ -305,9 +300,8 @@
 
                                 </span>
                                 <div class="d-flex flex-wrap flex-column flex-1">
-                                    <span class="paragraph leading-none">Call us</span>
-                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">+1 234 567 890 | +1
-                                        234 567 890
+                                    <span class="paragraph leading-none">Telephone</span>
+                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">+225 07 49 15 77 41
                                     </h5>
                                 </div>
                             </div>
@@ -329,9 +323,8 @@
 
                                 </span>
                                 <div class="d-flex flex-wrap flex-column flex-1">
-                                    <span class="paragraph leading-none">Office address</span>
-                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">2715 Ash Dr. San
-                                        Joe, South Dakota 6548
+                                    <span class="paragraph leading-none">Adresse</span>
+                                    <h5 class="text-xl fw-bold font-Syne text-white leading-7">Abidjan, Yopougon, Cote d'Ivoire
                                     </h5>
                                 </div>
                             </div>
@@ -339,41 +332,46 @@
                     </div>
                     <div class="col-12 col-lg-6 mb-6" data-aos="fade-up" data-aos-delay="300">
                         <form id="contact-form" action="mail.php" method="post" class="row">
+                            <div class="d-none">
+                                <label for="website">Website</label>
+                                <input id="website" type="text" name="website" tabindex="-1" autocomplete="off">
+                                <input type="hidden" name="source_page" value="contact.html">
+                            </div>
                             <div class="col-12 col-md-6">
                                 <label class="text-sm fw-normal font-Inter leading-tight mb-3 d-block"
-                                    for="name">Name</label>
+                                    for="name">Nom</label>
                                 <input id="name" class="fw-normal w-full leading-7 contact-form-control " type="text"
-                                    placeholder="Your name*" name="name">
+                                    placeholder="Votre nom" name="name" required minlength="2">
                             </div>
                             <div class="col-12 col-md-6">
                                 <label class="text-sm fw-normal font-Inter leading-tight mb-3 d-block"
                                     for="Email">Email</label>
                                 <input id="Email" class="fw-normal w-full leading-7 contact-form-control " type="email"
-                                    placeholder="Your email*" name="email">
+                                    placeholder="Votre email" name="email" required>
                             </div>
                             <div class="col-12 col-md-6">
                                 <label class="text-sm fw-normal font-Inter leading-tight mb-3 d-block"
-                                    for="Phone">Phone</label>
-                                <input id="Phone" class="fw-normal w-full leading-7 contact-form-control " type="text"
-                                    placeholder="Your number" name="phone">
+                                    for="Telephone">Telephone</label>
+                                <input id="Telephone" class="fw-normal w-full leading-7 contact-form-control " type="text"
+                                    placeholder="Votre numero" name="phone">
                             </div>
                             <div class="col-12 col-md-6">
                                 <label class="text-sm fw-normal font-Inter leading-tight mb-3 d-block"
-                                    for="Subject">Subject*</label>
+                                    for="Subject">Sujet*</label>
                                 <input id="Subject" class="fw-normal w-full leading-7 contact-form-control " type="text"
-                                    placeholder="Your subject*" name="subject">
+                                    placeholder="Sujet de votre message" name="subject" required minlength="3">
                             </div>
 
                             <div class="col-12">
                                 <label class="text-sm fw-normal font-Inter leading-tight mb-3 d-block"
                                     for="Message">Message</label>
                                 <textarea class="fw-normal w-full contact-form-control resize-none" name="message"
-                                    id="Message" cols="30" rows="10" placeholder="Type your message"></textarea>
+                                    id="Message" cols="30" rows="10" placeholder="Ecrivez votre message" required minlength="10"></textarea>
                             </div>
 
 
                             <div class="col-12">
-                                <button class="d-flex align-items-center flex-wrap btn-primary" type="submit">Submit
+                                <button class="d-flex align-items-center flex-wrap btn-primary" type="submit">Envoyer
                                     <span class="d-inline-block ml-3 animate-arrow-up">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -396,7 +394,7 @@
                                     </svg>
 
                                     <div class="d-flex flex-wrap gap-23">
-                                        <h4 class="text-white text-xl fw-bold font-Syne leading-7 mb-0">Follow me</h4>
+                                        <h4 class="text-white text-xl fw-bold font-Syne leading-7 mb-0">Me suivre</h4>
 
                                         <ul class="d-flex flex-wrap gap-x-4 align-items-center p-0 list-unstyled">
                                             <li><a href="#" class="contact-social-link">
@@ -457,9 +455,9 @@
                         <div class="pt-12">
                             <h3 class="section-title text-white mb-0"><span
                                     class="position-relative circle-shape footer-shape">Le</span>
-                                t’s work together</h3>
+                                Parlons de votre projet</h3>
                             <div class="d-flex flex-wrap align-items-center mt-10">
-                                <span class="text-xl fw-bold font-Syne text-white">Based in Germany |</span>
+                                <span class="text-xl fw-bold font-Syne text-white">Base a Abidjan |</span>
                                 <div class="footer-social">
                                     <ul
                                         class="d-flex flex-wrap gap-x-4 align-items-center list-unstyled p-0 footer-social-links">
@@ -504,9 +502,9 @@
 
 
                         <div class="d-flex flex-column justify-content-between service-contact-card-footer">
-                            <h3 class="text-xl fw-bold font-Syne text-white">Looking for a hectic designer?</h3>
+                            <h3 class="text-xl fw-bold font-Syne text-white">Un projet web a lancer ?</h3>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="text-2xl fw-bold font-Syne leading-none text-warning">hello@henry.com</p>
+                                <p class="text-2xl fw-bold font-Syne leading-none text-warning">dromaric58@gmail.com</p>
                                 <a href="#" class="text-white animate-arrow-up">
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -521,10 +519,10 @@
                         </div>
 
                         <div class="d-flex flex-column justify-content-between service-contact-card-footer">
-                            <h3 class="text-xl fw-bold font-Syne text-white">Want a more in-depth look at my history?
+                            <h3 class="text-xl fw-bold font-Syne text-white">Disponible pour une mission ?
                             </h3>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="text-2xl fw-bold font-Syne leading-none text-warning">+598 6879 9874</p>
+                                <p class="text-2xl fw-bold font-Syne leading-none text-warning">+225 07 49 15 77 41</p>
                                 <a href="#" class="text-white animate-arrow-up">
                                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -583,16 +581,14 @@
                         <div class="row">
 
                             <div class="col-12 col-sm-8 order-last order-sm-first">
-                                <p class="text-white text-lg fw-normal font-sans leading-7">©2023 Mark Henry, All Rights
-                                    Reserved
-                                </p>
+                                <p class="text-white text-lg fw-normal font-sans leading-7">&copy;2026 Romaric BOMBADE, Tous droits reserves</p>
                             </div>
                             <div class="col-12 col-sm-4 order-first order-sm-last">
                                 <div class="d-flex justify-content-end mb-2 mb-sm-0">
                                     <a id="scrollUp" class="d-flex flex-wrap align-items-center gap-2" href="#"
                                         aria-label="scroll up">
                                         <span class="text-white text-lg fw-normal font-sans leading-7 transition-all">
-                                            Back to Top</span>
+                                            Retour en haut</span>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12 19V5" stroke="#FFB646" stroke-width="2" stroke-linecap="round"
@@ -615,7 +611,7 @@
     </div>
 
 
-    <!-- JS Vendor, Plugins & Activation Script Files -->
+    <!-- JS Vendor, Plugins & Activation Script FiMe -->
 
     <!-- Vendors JS -->
     <script src="assets/js/vendor/modernizr-3.11.7.min.js"></script>
