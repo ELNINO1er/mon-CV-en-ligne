@@ -113,11 +113,10 @@
 .hero-visual-surface {
     position: absolute;
     inset: 0;
-    background: #f3c54e;
+    background: #ffb646;
     clip-path: polygon(24% 0, 100% 0, 100% 100%, 26% 100%, 0 82%, 0 38%);
     border-top-left-radius: 120px;
     border-bottom-left-radius: 160px;
-    overflow: visible;
 
     @media #{$tablet-device} {
         clip-path: polygon(28% 0, 100% 0, 100% 100%, 31% 100%, 0 79%, 0 34%);
@@ -129,23 +128,10 @@
         top: -140px;
         right: 0;
         bottom: 0;
-        left: 18%;
+        left: 19%;
+        background: url("../../images/hero/hero-surface.svg") center / 100% 100% no-repeat;
         clip-path: none;
-        border-top-left-radius: 260px;
-        border-bottom-left-radius: 260px;
-    }
-
-    &::before {
-        @media #{$desktop-device,$laptop-device,$big-device} {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -320px;
-            width: 420px;
-            height: 320px;
-            background: inherit;
-            clip-path: polygon(74% 0, 100% 0, 40% 100%, 0 100%);
-        }
+        border-radius: 0;
     }
 }
 
@@ -156,7 +142,7 @@
     margin-left: auto;
 
     @media #{$desktop-device,$laptop-device,$big-device} {
-        width: min(100%, 590px);
+        width: min(100%, 565px);
         margin-right: 0;
     }
 }
@@ -184,7 +170,9 @@
     height: 100%;
     max-width: none;
     object-fit: cover;
-    object-position: center 18%;
+    object-position: 42% 18%;
+    transform: scale(1.08);
+    transform-origin: center;
     filter: saturate(1.04) contrast(1.02);
 }
 
