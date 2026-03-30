@@ -17,6 +17,110 @@
     border-bottom: 1px solid rgba($color: $dark, $alpha: 40%);
 }
 
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #10110c 0%, #171a12 100%);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
+    color: $white;
+
+    &:hover {
+        color: $white;
+        transform: translateY(-1px);
+    }
+}
+
+.site-brand-mark {
+    position: relative;
+    width: 42px;
+    height: 34px;
+    flex: 0 0 42px;
+}
+
+.site-brand-angle,
+.site-brand-slash {
+    position: absolute;
+    top: 50%;
+    color: #f2d40a;
+    font-family: "Syne", sans-serif;
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 1px 0 #2f68ff, -1px 0 #2f68ff, 0 1px #2f68ff, 0 -1px #2f68ff;
+}
+
+.site-brand-angle {
+    font-size: 24px;
+}
+
+.site-brand-angle-left {
+    left: 0;
+    transform: translateY(-42%);
+}
+
+.site-brand-angle-right {
+    right: 0;
+    transform: translateY(-42%);
+}
+
+.site-brand-slash {
+    left: 50%;
+    font-size: 30px;
+    transform: translate(-50%, -54%) rotate(10deg);
+}
+
+.site-brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.92;
+}
+
+.site-brand-title {
+    color: $white;
+    font-family: "Syne", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.site-brand-subtitle {
+    margin-top: 2px;
+    color: #f2d40a;
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.site-brand-offcanvas {
+    padding: 14px 18px;
+
+    .site-brand-mark {
+        width: 54px;
+        height: 42px;
+        flex-basis: 54px;
+    }
+
+    .site-brand-angle {
+        font-size: 30px;
+    }
+
+    .site-brand-slash {
+        font-size: 38px;
+    }
+
+    .site-brand-title {
+        font-size: 28px;
+    }
+
+    .site-brand-subtitle {
+        font-size: 14px;
+    }
+}
+
 .bg-dark {
     .header-border-bottom {
         border-color: rgba($color: $white, $alpha: 20%);
@@ -209,4 +313,30 @@
         }
 
     }
+}
+
+.footer-wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-transform: uppercase;
+    line-height: 0.86;
+}
+
+.footer-wordmark-line {
+    display: block;
+    color: #FFE9D9;
+    font-family: "Syne", sans-serif;
+    font-size: clamp(3.5rem, 11vw, 8.5rem);
+    font-weight: 800;
+    letter-spacing: -0.08em;
+}
+
+.footer-wordmark-dev {
+    color: #F2D40A;
+}
+
+.footer-wordmark-accent {
+    color: #F2D40A;
 }

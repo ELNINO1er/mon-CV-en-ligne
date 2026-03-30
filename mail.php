@@ -14,6 +14,18 @@ const MAX_FIELD_LENGTH = 255;
 const MAX_MESSAGE_LENGTH = 5000;
 
 /**
+ * Shared PDO options.
+ */
+function pdoOptions(): array
+{
+    return [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+}
+
+/**
  * Return a JSON response and stop execution.
  */
 function respond(int $statusCode, array $payload): never
@@ -61,7 +73,7 @@ function inputString(string $key, int $maxLength = MAX_FIELD_LENGTH): string
  */
 function createDatabaseConnection(array $databaseConfig): PDO
 {
-    $driver = $databaseConfig['driver'] ?? 'sqlite';
+    $driver = $databaseConfig['driver'] ?? 'mysql';
 
     if ($driver === 'mysql') {
         $mysql = $databaseConfig['mysql'] ?? [];
@@ -76,18 +88,20 @@ function createDatabaseConnection(array $databaseConfig): PDO
             throw new RuntimeException('La configuration MySQL est incomplete.');
         }
 
+        $serverDsn = sprintf('mysql:host=%s;port=%d;charset=%s', $host, $port, $charset);
+        $serverPdo = new PDO($serverDsn, $username, $password, pdoOptions());
+        $serverPdo->exec(
+            sprintf(
+                'CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET %s COLLATE %s_unicode_ci',
+                str_replace('`', '``', $dbName),
+                $charset,
+                $charset
+            )
+        );
+
         $dsn = sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s', $host, $port, $dbName, $charset);
 
-        return new PDO(
-            $dsn,
-            $username,
-            $password,
-            [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ]
-        );
+        return new PDO($dsn, $username, $password, pdoOptions());
     }
 
     $sqlitePath = $databaseConfig['sqlite_path'] ?? (__DIR__ . '/storage/contact-messages.sqlite');
@@ -96,16 +110,7 @@ function createDatabaseConnection(array $databaseConfig): PDO
         throw new RuntimeException('Impossible de creer le dossier de stockage.');
     }
 
-    return new PDO(
-        'sqlite:' . $sqlitePath,
-        null,
-        null,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ]
-    );
+    return new PDO('sqlite:' . $sqlitePath, null, null, pdoOptions());
 }
 
 /**
@@ -203,6 +208,227 @@ function updateMailStatus(PDO $pdo, int $messageId, string $status, ?string $err
 }
 
 /**
+ * Escape text for safe HTML output.
+ */
+function escapeHtml(?string $value): string
+{
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Format plain text paragraphs for HTML emails.
+ */
+function formatHtmlParagraphs(string $text): string
+{
+    return nl2br(escapeHtml($text));
+}
+
+/**
+ * Build an email-safe brand block inspired by the site logo.
+ */
+function buildEmailBrandBlock(): string
+{
+    return <<<HTML
+<table role="presentation" cellspacing="0" cellpadding="0" style="border-collapse:separate;border-spacing:0;">
+    <tr>
+        <td style="padding:12px 14px;border:1px solid rgba(255,255,255,0.08);border-radius:18px;background:linear-gradient(135deg,#10110c 0%,#171a12 100%);">
+            <table role="presentation" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                <tr>
+                    <td style="padding:0 12px 0 0;vertical-align:middle;">
+                        <div style="font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:1;font-weight:700;color:#f2d40a;letter-spacing:-0.08em;text-shadow:1px 0 #2f68ff,-1px 0 #2f68ff,0 1px #2f68ff,0 -1px #2f68ff;">
+                            &lt;/&gt;
+                        </div>
+                    </td>
+                    <td style="vertical-align:middle;">
+                        <div style="font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:1;font-weight:800;letter-spacing:-0.06em;color:#ffffff;">RORO</div>
+                        <div style="margin-top:3px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.2;font-weight:700;letter-spacing:0.04em;color:#f2d40a;">systems</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+HTML;
+}
+
+/**
+ * Build a polished HTML wrapper for outgoing emails.
+ */
+function buildEmailLayout(string $preheader, string $title, string $intro, string $content, string $footerNote): string
+{
+    $safePreheader = escapeHtml($preheader);
+    $safeTitle = escapeHtml($title);
+    $safeIntro = escapeHtml($intro);
+    $safeFooterNote = escapeHtml($footerNote);
+    $brandBlock = buildEmailBrandBlock();
+
+    return <<<HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$safeTitle}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f1ea;font-family:Arial,Helvetica,sans-serif;color:#111827;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">{$safePreheader}</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f1ea;padding:32px 16px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:24px;overflow:hidden;">
+                    <tr>
+                        <td style="padding:32px 36px;background:#111111;color:#ffffff;">
+                            <div style="margin-bottom:18px;">{$brandBlock}</div>
+                            <div style="font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:#f8d49a;margin-bottom:14px;">Portfolio Romaric BOMBADE</div>
+                            <h1 style="margin:0;font-size:32px;line-height:1.2;font-weight:700;color:#ffffff;">{$safeTitle}</h1>
+                            <p style="margin:14px 0 0;font-size:16px;line-height:1.7;color:rgba(255,255,255,0.82);">{$safeIntro}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px 36px 20px;">
+                            {$content}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0 36px 32px;">
+                            <div style="padding-top:18px;border-top:1px solid #e5e7eb;font-size:14px;line-height:1.7;color:#6b7280;">
+                                {$safeFooterNote}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+HTML;
+}
+
+/**
+ * Build the internal notification email content.
+ */
+function buildOwnerEmailContent(array $payload, int $messageId): array
+{
+    $subject = 'Nouveau message portfolio';
+    if ($payload['subject'] !== '') {
+        $subject .= ' : ' . $payload['subject'];
+    }
+
+    $detailsRows = [
+        ['label' => 'ID message', 'value' => '#' . $messageId],
+        ['label' => 'Nom', 'value' => $payload['name']],
+        ['label' => 'Email', 'value' => $payload['email']],
+        ['label' => 'Telephone', 'value' => $payload['phone'] !== '' ? $payload['phone'] : 'Non renseigne'],
+        ['label' => 'Sujet', 'value' => $payload['subject']],
+        ['label' => 'Page source', 'value' => $payload['source_page'] !== '' ? $payload['source_page'] : 'Formulaire de contact'],
+        ['label' => 'Adresse IP', 'value' => $payload['ip_address'] ?? 'Indisponible'],
+    ];
+
+    $rowsHtml = '';
+    foreach ($detailsRows as $row) {
+        $rowsHtml .= '<tr>'
+            . '<td style="padding:12px 14px;border-bottom:1px solid #e5e7eb;font-size:14px;font-weight:700;color:#111827;width:160px;">' . escapeHtml($row['label']) . '</td>'
+            . '<td style="padding:12px 14px;border-bottom:1px solid #e5e7eb;font-size:14px;color:#374151;">' . escapeHtml((string) $row['value']) . '</td>'
+            . '</tr>';
+    }
+
+    $content = ''
+        . '<div style="margin-bottom:24px;padding:18px 20px;border-radius:18px;background:#f9fafb;border:1px solid #eceff3;">'
+        . '<p style="margin:0;font-size:15px;line-height:1.7;color:#374151;">Un nouveau contact a ete soumis depuis le portfolio. Vous pouvez repondre directement a cet e-mail pour revenir vers le prospect.</p>'
+        . '</div>'
+        . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #e5e7eb;border-radius:18px;overflow:hidden;">'
+        . $rowsHtml
+        . '</table>'
+        . '<div style="margin-top:24px;padding:22px 24px;border-radius:18px;background:#111111;">'
+        . '<div style="margin:0 0 10px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#f8d49a;">Message</div>'
+        . '<div style="font-size:15px;line-height:1.8;color:#ffffff;">' . formatHtmlParagraphs($payload['message']) . '</div>'
+        . '</div>';
+
+    $html = buildEmailLayout(
+        'Nouveau message recu depuis le portfolio',
+        'Nouveau message recu depuis le portfolio',
+        'Un prospect vient de vous ecrire depuis votre formulaire de contact.',
+        $content,
+        'Portfolio Romaric BOMBADE'
+    );
+
+    $altBody = implode(
+        "\n",
+        [
+            'Nouveau message recu depuis le portfolio',
+            'ID message : #' . $messageId,
+            'Nom : ' . $payload['name'],
+            'Email : ' . $payload['email'],
+            'Telephone : ' . ($payload['phone'] !== '' ? $payload['phone'] : 'Non renseigne'),
+            'Sujet : ' . $payload['subject'],
+            'Page source : ' . ($payload['source_page'] !== '' ? $payload['source_page'] : 'Formulaire de contact'),
+            'Adresse IP : ' . ($payload['ip_address'] ?? 'Indisponible'),
+            '',
+            'Message :',
+            $payload['message'],
+        ]
+    );
+
+    return [
+        'subject' => $subject,
+        'html' => $html,
+        'text' => $altBody,
+    ];
+}
+
+/**
+ * Build the acknowledgment email sent to the visitor.
+ */
+function buildUserEmailContent(array $payload): array
+{
+    $subject = 'Votre message a bien ete recu';
+
+    $content = ''
+        . '<div style="margin-bottom:24px;padding:18px 20px;border-radius:18px;background:#f9fafb;border:1px solid #eceff3;">'
+        . '<p style="margin:0;font-size:15px;line-height:1.7;color:#374151;">Bonjour ' . escapeHtml($payload['name']) . ', merci pour votre message. Je l\'ai bien recu et je reviens vers vous des que possible.</p>'
+        . '</div>'
+        . '<div style="padding:22px 24px;border-radius:18px;background:#fff7ed;border:1px solid #fed7aa;margin-bottom:22px;">'
+        . '<div style="margin:0 0 8px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#c2410c;">Recapitulatif</div>'
+        . '<p style="margin:0 0 8px;font-size:15px;line-height:1.7;color:#431407;"><strong>Sujet :</strong> ' . escapeHtml($payload['subject']) . '</p>'
+        . '<p style="margin:0;font-size:15px;line-height:1.8;color:#431407;"><strong>Votre message :</strong><br>' . formatHtmlParagraphs($payload['message']) . '</p>'
+        . '</div>'
+        . '<div style="padding:20px 22px;border-radius:18px;background:#111111;">'
+        . '<div style="font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#f8d49a;margin-bottom:10px;">Suite</div>'
+        . '<p style="margin:0;font-size:15px;line-height:1.8;color:#ffffff;">Si votre demande concerne une mission, un devis ou un accompagnement technique, je vous ferai un retour avec les prochaines etapes adaptees a votre besoin.</p>'
+        . '</div>';
+
+    $html = buildEmailLayout(
+        'Votre message a bien ete recu',
+        'Merci pour votre prise de contact',
+        'Votre demande est bien enregistree. Je vous recontacte tres rapidement.',
+        $content,
+        'Romaric BOMBADE | Developpeur Full-Stack'
+    );
+
+    $altBody = implode(
+        "\n",
+        [
+            'Bonjour ' . $payload['name'] . ',',
+            '',
+            'Votre message a bien ete recu. Je vous recontacte tres rapidement.',
+            '',
+            'Sujet : ' . $payload['subject'],
+            'Votre message :',
+            $payload['message'],
+            '',
+            'Romaric BOMBADE',
+        ]
+    );
+
+    return [
+        'subject' => $subject,
+        'html' => $html,
+        'text' => $altBody,
+    ];
+}
+
+/**
  * Configure PHPMailer transport.
  */
 function configureMailer(PHPMailer $mailer, array $mailConfig): void
@@ -216,7 +442,7 @@ function configureMailer(PHPMailer $mailer, array $mailConfig): void
     $smtp = $mailConfig['smtp'] ?? [];
     $host = trim((string) ($smtp['host'] ?? ''));
     $username = trim((string) ($smtp['username'] ?? ''));
-    $password = (string) ($smtp['password'] ?? '');
+    $password = preg_replace('/\s+/', '', (string) ($smtp['password'] ?? '')) ?? '';
     $fromEmail = trim((string) ($smtp['from_email'] ?? ''));
     $fromName = trim((string) ($smtp['from_name'] ?? 'Portfolio'));
 
@@ -232,9 +458,9 @@ function configureMailer(PHPMailer $mailer, array $mailConfig): void
     $mailer->SMTPAuth = true;
     $mailer->Username = $username;
     $mailer->Password = $password;
-    $mailer->Port = (int) ($smtp['port'] ?? 465);
+    $mailer->Port = (int) ($smtp['port'] ?? 587);
 
-    $encryption = strtolower((string) ($smtp['encryption'] ?? 'ssl'));
+    $encryption = strtolower((string) ($smtp['encryption'] ?? 'tls'));
     if ($encryption === 'tls') {
         $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     } elseif ($encryption === 'ssl') {
@@ -248,9 +474,20 @@ function configureMailer(PHPMailer $mailer, array $mailConfig): void
 }
 
 /**
- * Send the e-mail notification to the portfolio owner.
+ * Create a configured PHPMailer instance.
  */
-function sendNotification(array $config, array $payload, int $messageId): void
+function createMailer(array $config): PHPMailer
+{
+    $mail = new PHPMailer(true);
+    configureMailer($mail, $config['mail'] ?? []);
+
+    return $mail;
+}
+
+/**
+ * Send the owner notification email.
+ */
+function sendOwnerNotification(array $config, array $payload, int $messageId): void
 {
     $recipient = $config['recipient'] ?? [];
     $recipientEmail = trim((string) ($recipient['email'] ?? ''));
@@ -260,43 +497,32 @@ function sendNotification(array $config, array $payload, int $messageId): void
         throw new RuntimeException('Aucune adresse destinataire n\'est configuree.');
     }
 
-    $mail = new PHPMailer(true);
-    configureMailer($mail, $config['mail'] ?? []);
-
+    $mail = createMailer($config);
     $mail->addAddress($recipientEmail, $recipientName);
     $mail->addReplyTo($payload['email'], $payload['name']);
     $mail->isHTML(true);
 
-    $subjectLine = 'Nouveau message portfolio';
-    if ($payload['subject'] !== '') {
-        $subjectLine .= ' : ' . $payload['subject'];
-    }
+    $content = buildOwnerEmailContent($payload, $messageId);
+    $mail->Subject = $content['subject'];
+    $mail->Body = $content['html'];
+    $mail->AltBody = $content['text'];
 
-    $mail->Subject = $subjectLine;
+    $mail->send();
+}
 
-    $body = [];
-    $body[] = '<h2>Nouveau message recu depuis le portfolio</h2>';
-    $body[] = '<p><strong>ID message :</strong> #' . $messageId . '</p>';
-    $body[] = '<p><strong>Nom :</strong> ' . htmlspecialchars($payload['name'], ENT_QUOTES, 'UTF-8') . '</p>';
-    $body[] = '<p><strong>Email :</strong> ' . htmlspecialchars($payload['email'], ENT_QUOTES, 'UTF-8') . '</p>';
-    $body[] = '<p><strong>Telephone :</strong> ' . htmlspecialchars($payload['phone'] !== '' ? $payload['phone'] : '-', ENT_QUOTES, 'UTF-8') . '</p>';
-    $body[] = '<p><strong>Sujet :</strong> ' . htmlspecialchars($payload['subject'], ENT_QUOTES, 'UTF-8') . '</p>';
-    $body[] = '<p><strong>Message :</strong><br>' . nl2br(htmlspecialchars($payload['message'], ENT_QUOTES, 'UTF-8')) . '</p>';
+/**
+ * Send an acknowledgment email to the visitor.
+ */
+function sendUserAcknowledgement(array $config, array $payload): void
+{
+    $mail = createMailer($config);
+    $mail->addAddress($payload['email'], $payload['name']);
+    $mail->isHTML(true);
 
-    $mail->Body = implode("\n", $body);
-    $mail->AltBody = implode(
-        "\n",
-        [
-            'Nouveau message recu depuis le portfolio',
-            'ID message : #' . $messageId,
-            'Nom : ' . $payload['name'],
-            'Email : ' . $payload['email'],
-            'Telephone : ' . ($payload['phone'] !== '' ? $payload['phone'] : '-'),
-            'Sujet : ' . $payload['subject'],
-            'Message :',
-            $payload['message'],
-        ]
-    );
+    $content = buildUserEmailContent($payload);
+    $mail->Subject = $content['subject'];
+    $mail->Body = $content['html'];
+    $mail->AltBody = $content['text'];
 
     $mail->send();
 }
@@ -357,7 +583,7 @@ if ($errors !== []) {
 
 try {
     $databaseConfig = $config['database'] ?? [];
-    $driver = $databaseConfig['driver'] ?? 'sqlite';
+    $driver = $databaseConfig['driver'] ?? 'mysql';
     $pdo = createDatabaseConnection($databaseConfig);
     ensureMessagesTable($pdo, $driver);
     $messageId = storeMessage($pdo, $payload);
@@ -368,14 +594,26 @@ try {
 $mailRequired = (bool) ($config['mail']['require_success'] ?? false);
 
 try {
-    sendNotification($config, $payload, $messageId);
-    updateMailStatus($pdo, $messageId, 'sent');
+    sendOwnerNotification($config, $payload, $messageId);
+    $userAcknowledgementSent = false;
+
+    try {
+        sendUserAcknowledgement($config, $payload);
+        $userAcknowledgementSent = true;
+        updateMailStatus($pdo, $messageId, 'sent');
+    } catch (Throwable $exception) {
+        updateMailStatus($pdo, $messageId, 'owner_sent_ack_failed', mb_substr($exception->getMessage(), 0, 2000));
+    }
+
+    $successMessage = $userAcknowledgementSent
+        ? 'Votre message a bien ete recu. Un e-mail de confirmation vous a ete envoye et je vous recontacte tres rapidement.'
+        : 'Votre message a bien ete recu. Je vous recontacte tres rapidement.';
 
     respond(
         200,
         [
             'success' => true,
-            'message' => 'Message envoye avec succes. Je vous repondrai rapidement.',
+            'message' => $successMessage,
         ]
     );
 } catch (Throwable $exception) {
@@ -386,7 +624,7 @@ try {
             500,
             [
                 'success' => false,
-                'message' => 'Votre message a ete enregistre, mais la notification e-mail a echoue.',
+                'message' => 'Votre message est enregistre, mais la notification e-mail a rencontre un probleme.',
             ]
         );
     }
@@ -395,7 +633,7 @@ try {
         200,
         [
             'success' => true,
-            'message' => 'Votre message a ete enregistre. La notification e-mail sera active apres configuration SMTP.',
+            'message' => 'Votre message est bien enregistre. Je pourrai activer la notification e-mail des que la configuration SMTP sera finalisee.',
         ]
     );
 }

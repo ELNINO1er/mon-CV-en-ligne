@@ -9,7 +9,7 @@ return [
     ],
     'database' => [
         // Supported drivers: sqlite, mysql
-        'driver' => 'sqlite',
+        'driver' => 'mysql',
         'sqlite_path' => __DIR__ . '/../storage/contact-messages.sqlite',
         'mysql' => [
             'host' => '127.0.0.1',
@@ -21,13 +21,14 @@ return [
         ],
     ],
     'mail' => [
-        // Set to true if the visitor must get an error when email delivery fails.
+        // Gmail personnel: activez la validation en 2 etapes puis creez un mot de passe d'application.
+        // Collez le mot de passe d'application ci-dessous, sans espaces si possible.
         'require_success' => false,
         'transport' => 'smtp',
         'smtp' => [
             'host' => 'smtp.gmail.com',
-            'port' => 465,
-            'encryption' => 'ssl',
+            'port' => 587,
+            'encryption' => 'tls',
             'username' => 'dromaric58@gmail.com',
             'password' => '',
             'from_email' => 'dromaric58@gmail.com',
@@ -35,3 +36,5 @@ return [
         ],
     ],
 ];
+
+

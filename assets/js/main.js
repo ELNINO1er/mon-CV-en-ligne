@@ -153,7 +153,33 @@
   */
   const contactForm = $("#contact-form"),
     formMessages = $(".form-message");
-  contactForm.validate({
+  const renderFormMessage = function (type, title, text) {
+    const icons = {
+      success:
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 7L9 18L4 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      error:
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.29 3.86L1.82 18C1.64 18.31 1.55 18.46 1.54 18.59C1.5 18.95 1.69 19.29 2 19.46C2.11 19.52 2.29 19.52 2.65 19.52H21.35C21.71 19.52 21.89 19.52 22 19.46C22.31 19.29 22.5 18.95 22.46 18.59C22.45 18.46 22.36 18.31 22.18 18L13.71 3.86C13.53 3.55 13.44 3.4 13.31 3.3C13.03 3.08 12.64 3.08 12.36 3.3C12.23 3.4 12.14 3.55 11.96 3.86H10.29Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      warning:
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.29 3.86L1.82 18C1.64 18.31 1.55 18.46 1.54 18.59C1.5 18.95 1.69 19.29 2 19.46C2.11 19.52 2.29 19.52 2.65 19.52H21.35C21.71 19.52 21.89 19.52 22 19.46C22.31 19.29 22.5 18.95 22.46 18.59C22.45 18.46 22.36 18.31 22.18 18L13.71 3.86C13.53 3.55 13.44 3.4 13.31 3.3C13.03 3.08 12.64 3.08 12.36 3.3C12.23 3.4 12.14 3.55 11.96 3.86H10.29Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    };
+
+    formMessages
+      .removeClass(
+        "form-message-success form-message-error form-message-warning is-visible"
+      )
+      .addClass(`form-message-${type} is-visible`)
+      .html(
+        `<div class="form-message-inner">
+          <span class="form-message-icon">${icons[type] || icons.warning}</span>
+          <div class="form-message-content">
+            <strong class="form-message-title">${title}</strong>
+            <p class="form-message-text">${text}</p>
+          </div>
+        </div>`
+      );
+  };
+
+  const contactValidator = contactForm.validate({
     rules: {
       name: {
         required: true,
@@ -172,6 +198,44 @@
         minlength: 10,
       },
     },
+    messages: {
+      name: {
+        required: "Indiquez votre nom pour que je sache a qui repondre.",
+        minlength: "Votre nom doit contenir au moins 2 caracteres.",
+      },
+      email: {
+        required: "Ajoutez votre adresse e-mail.",
+        email: "Entrez une adresse e-mail valide.",
+      },
+      subject: {
+        required: "Precisez le sujet de votre message.",
+        minlength: "Le sujet doit contenir au moins 3 caracteres.",
+      },
+      message: {
+        required: "Expliquez votre besoin en quelques lignes.",
+        minlength: "Votre message doit contenir au moins 10 caracteres.",
+      },
+    },
+    errorElement: "span",
+    errorPlacement: function (error, element) {
+      error.addClass("contact-field-error");
+      error.insertAfter(element);
+    },
+    highlight: function (element) {
+      $(element).addClass("is-invalid");
+    },
+    unhighlight: function (element) {
+      $(element).removeClass("is-invalid");
+    },
+    invalidHandler: function (event, validator) {
+      if (validator.numberOfInvalids() > 0) {
+        renderFormMessage(
+          "warning",
+          "Quelques informations sont a corriger",
+          "Verifiez les champs signales puis renvoyez votre message."
+        );
+      }
+    },
     submitHandler: function (form) {
       $.ajax({
         type: "POST",
@@ -183,32 +247,34 @@
           const successMessage =
             response && response.message
               ? response.message
-              : "Message envoye avec succes.";
+              : "Votre message a bien ete envoye. Je reviens vers vous rapidement.";
 
-          formMessages
-            .removeClass("error text-danger")
-            .addClass("success text-success mt-3")
-            .text(successMessage);
-          // Clear the form.
+          renderFormMessage(
+            "success",
+            "Message bien recu",
+            successMessage
+          );
           form.reset();
+          contactValidator.resetForm();
+          contactForm.find(".contact-form-control").removeClass("is-invalid");
         })
         .fail(function (data) {
-          // Make sure that the formMessages div has the 'error' class.
-          formMessages
-            .removeClass("success text-success")
-            .addClass("error text-danger mt-3");
-          // Set the message text.
-
           const errorMessage =
             data.responseJSON && data.responseJSON.message
               ? data.responseJSON.message
               : data.responseText;
 
           if (errorMessage !== "") {
-            formMessages.text(errorMessage);
+            renderFormMessage(
+              "error",
+              "Envoi impossible pour le moment",
+              errorMessage
+            );
           } else {
-            formMessages.text(
-              "Oops! An error occured and your message could not be sent."
+            renderFormMessage(
+              "error",
+              "Envoi impossible pour le moment",
+              "Le message n'a pas pu etre envoye. Reessayez dans un instant ou contactez-moi directement par e-mail."
             );
           }
         });

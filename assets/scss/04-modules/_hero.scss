@@ -1,4 +1,25 @@
+.hero-section {
+    overflow: hidden;
+}
+
+.hero-stage {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+
+    @media #{$desktop-device,$laptop-device,$big-device} {
+        grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
+        gap: 32px;
+    }
+
+    @media #{$big-device} {
+        gap: 48px;
+    }
+}
+
 .hero-content-wrapper {
+    position: relative;
+    z-index: 2;
 
     @media #{$laptop-device,$big-device} {
         padding-top: 48px;
@@ -7,7 +28,6 @@
 
 .hello-iam {
     margin-bottom: 12px;
-
 
     @media #{$desktop-device,$laptop-device,$big-device} {
         font-size: 32px;
@@ -22,7 +42,6 @@
         margin-left: 8px;
     }
 }
-
 
 .hero-title {
     color: $dark;
@@ -55,7 +74,6 @@
     @media #{$laptop-device,$big-device} {
         font-size: 24px;
     }
-
 }
 
 .text-counter {
@@ -67,39 +85,114 @@
     color: rgba($color: $dark, $alpha: 80%);
 }
 
-.hero-image {
+.hero-visual {
+    position: relative;
+    min-height: 420px;
+    padding: 24px 8px 56px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
     @media #{$tablet-device} {
-        max-width: 420px;
+        min-height: 560px;
+        padding: 32px 12px 72px;
     }
 
-    @media #{$desktop-device} {
-        max-width: 570px;
-    }
-
-    @media #{$laptop-device} {
-        max-width: 650px;
-    }
-
-    @media #{$big-device} {
-        max-width: initial;
+    @media #{$desktop-device,$laptop-device,$big-device} {
+        min-height: 720px;
+        padding: 0 0 56px;
     }
 }
 
-.contact-spin {
-    svg {
-        bottom: 200px;
-        right: 40px;
+.hero-visual-surface {
+    position: absolute;
+    inset: 0;
+    background: #f0c554;
+    box-shadow: inset 0 0 0 1px rgba(8, 8, 8, 0.06);
+    clip-path: polygon(24% 0, 100% 0, 100% 100%, 26% 100%, 0 82%, 0 38%);
+    border-top-left-radius: 120px;
+    border-bottom-left-radius: 160px;
 
-        @media #{$desktop-device,$laptop-device,$big-device} {
-            right: 150px;
-            bottom: 80px;
+    @media #{$tablet-device} {
+        clip-path: polygon(28% 0, 100% 0, 100% 100%, 31% 100%, 0 79%, 0 34%);
+        border-top-left-radius: 180px;
+        border-bottom-left-radius: 220px;
+    }
+
+    @media #{$desktop-device,$laptop-device,$big-device} {
+        clip-path: polygon(38% 0, 100% 0, 100% 100%, 42% 100%, 0 74%, 0 40%);
+        border-top-left-radius: 240px;
+        border-bottom-left-radius: 300px;
+    }
+}
+
+.hero-visual-photo-wrap {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 540px);
+    margin-left: auto;
+}
+
+.hero-visual-photo-frame {
+    height: clamp(420px, 82vw, 720px);
+    overflow: hidden;
+    border-radius: 140px 140px 170px 170px;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 32px 70px rgba(8, 8, 8, 0.18);
+
+    @media #{$tablet-device} {
+        border-radius: 180px 180px 220px 220px;
+    }
+
+    @media #{$desktop-device,$laptop-device,$big-device} {
+        height: clamp(560px, 52vw, 760px);
+        border-radius: 220px 220px 260px 260px;
+    }
+}
+
+.hero-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 18%;
+    filter: saturate(1.04) contrast(1.02);
+}
+
+.contact-spin {
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+    z-index: 2;
+
+    svg {
+        position: static;
+        width: 132px;
+        height: 132px;
+    }
+
+    @media #{$tablet-device} {
+        right: 18px;
+
+        svg {
+            width: 160px;
+            height: 160px;
+        }
+    }
+
+    @media #{$desktop-device,$laptop-device,$big-device} {
+        right: 12px;
+        bottom: 18px;
+
+        svg {
+            width: 180px;
+            height: 180px;
         }
     }
 }
 
 .hero-btn-wraper {
-
     margin-bottom: 50px;
 
     @media #{$tablet-device,$desktop-device} {
@@ -113,7 +206,6 @@
     @media #{$big-device} {
         margin-bottom: 80px;
     }
-
 }
 
 .animate-spin {
