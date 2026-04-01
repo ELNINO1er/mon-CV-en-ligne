@@ -1774,19 +1774,63 @@ a {
   }
 }
 
+.about-photo-stage {
+  min-height: 520px;
+  padding: 26px 22px 34px;
+}
+@media only screen and (min-width: 992px) {
+  .about-photo-stage {
+    min-height: 720px;
+    padding: 34px 30px 42px;
+  }
+}
+
+.about-photo-shape {
+  position: absolute;
+  top: 10%;
+  right: 4%;
+  bottom: 3%;
+  left: 3%;
+  background: #FFFFFF;
+  border-radius: 38% 62% 42% 58%/32% 30% 70% 68%;
+  transform: rotate(-8deg);
+}
+
+.about-photo-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 0.76;
+  margin-left: auto;
+  margin-right: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 46% 50%;
+     object-position: 46% 50%;
+  border-radius: 34% 44% 28% 38%/18% 18% 56% 58%;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
 .years-of-experience {
   z-index: 10;
-  bottom: 0;
+  bottom: -10px;
   right: 0;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .years-of-experience {
-    right: -30px;
+    right: -6px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .years-of-experience {
-    right: 170px;
+    right: 40px;
+  }
+}
+@media only screen and (min-width: 1280px) and (max-width: 1440px), only screen and (min-width: 1441px) {
+  .years-of-experience {
+    right: 18px;
   }
 }
 
