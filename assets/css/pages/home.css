@@ -2264,6 +2264,22 @@ a {
           animation: moveUp 0.8s linear;
 }
 
+.portfolio-feature-media {
+  width: 100%;
+}
+.portfolio-feature-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.portfolio-feature-media--compact {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .portfolio-link {
   font-size: 20px;
   text-transform: capitalize;
@@ -2479,6 +2495,42 @@ a {
   padding-bottom: 32px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-left: 0;
+}
+
+.blog-details-hero-frame {
+  width: 100%;
+  max-width: 1076px;
+  aspect-ratio: 1076/580;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.blog-details-hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+.blog-author-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  object-position: center 22%;
+  flex: none;
+}
+
+.blog-details-inline-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 526/360;
+  object-fit: cover;
+  object-position: center;
 }
 
 .blog-social-link {
