@@ -159,6 +159,15 @@
     }
 }
 
+.about-profile-image {
+    width: 100%;
+    max-width: 526px;
+    aspect-ratio: 526 / 560;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 24px 80px rgba(8, 8, 8, 0.12);
+}
+
 .about-grid-section-two {
 
     display: grid;
@@ -253,4 +262,13 @@
     @media #{$laptop-device,$big-device} {
         gap: 0px;
     }
+}
+
+.about-work-image {
+    width: 100%;
+    max-width: 526px;
+    aspect-ratio: 526 / 560;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 20px;
 }

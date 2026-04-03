@@ -1931,6 +1931,16 @@ a {
   }
 }
 
+.about-profile-image {
+  width: 100%;
+  max-width: 526px;
+  aspect-ratio: 526/560;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(8, 8, 8, 0.12);
+}
+
 .about-grid-section-two {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -2010,6 +2020,17 @@ a {
   .about-me-grid {
     gap: 0px;
   }
+}
+
+.about-work-image {
+  width: 100%;
+  max-width: 526px;
+  aspect-ratio: 526/560;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  border-radius: 20px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
