@@ -2240,6 +2240,7 @@ a {
   padding-right: 28px;
   background-color: rgba(8, 8, 8, 0.04);
   border-radius: 16px;
+  min-height: 178px;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -2272,12 +2273,18 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+@media only screen and (min-width: 1280px) {
+  .awards-tab-contents {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 .awards-tab-item {
   gap: 32px;
   padding: 32px;
   background-color: rgba(8, 8, 8, 0.04);
   border-radius: 16px;
+  min-height: 238px;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -2298,6 +2305,33 @@ a {
 .bg-dark-tab .awards-tab-item:hover .text-black-text-800,
 .bg-dark-tab .awards-tab-item:hover .text-white {
   color: #080808 !important;
+}
+
+.skills-tab-icon,
+.awards-tab-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFB646;
+}
+
+.bg-dark-tab .skills-tab-item:hover .skills-tab-icon,
+.bg-dark-tab .skills-tab-item:hover .awards-tab-icon,
+.bg-dark-tab .awards-tab-item:hover .skills-tab-icon,
+.bg-dark-tab .awards-tab-item:hover .awards-tab-icon {
+  background: rgba(8, 8, 8, 0.08);
+  border-color: rgba(8, 8, 8, 0.12);
+  color: #FFB646;
 }
 
 .bg-dark-tab .featured-properties {

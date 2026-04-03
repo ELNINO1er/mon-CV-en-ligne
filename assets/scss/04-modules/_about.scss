@@ -168,6 +168,44 @@
     box-shadow: 0 24px 80px rgba(8, 8, 8, 0.12);
 }
 
+.skills-tab-icon,
+.awards-tab-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-syne;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: $warning;
+}
+
+.skills-tab-item {
+    min-height: 178px;
+}
+
+.awards-tab-item {
+    min-height: 238px;
+}
+
+.bg-dark-tab {
+    .skills-tab-item:hover,
+    .awards-tab-item:hover {
+        .skills-tab-icon,
+        .awards-tab-icon {
+            background: rgba($color: $dark, $alpha: 0.08);
+            border-color: rgba($color: $dark, $alpha: 0.12);
+            color: $warning;
+        }
+    }
+}
+
 .about-grid-section-two {
 
     display: grid;
