@@ -2033,6 +2033,60 @@ a {
   border-radius: 20px;
 }
 
+.about-tab-photo-stage {
+  min-height: 420px;
+  padding: 18px 14px 24px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 1280px) and (max-width: 1440px), only screen and (min-width: 1441px) {
+  .about-tab-photo-stage {
+    min-height: 560px;
+    padding: 26px 22px 34px;
+  }
+}
+
+.about-tab-photo-shape {
+  position: absolute;
+  top: 12%;
+  right: 5%;
+  bottom: 5%;
+  left: 4%;
+  background: #FFFFFF;
+  border-radius: 38% 62% 42% 58%/32% 30% 70% 68%;
+  transform: rotate(-8deg);
+}
+
+.about-tab-photo-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 0.76;
+  margin-left: auto;
+  margin-right: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center top;
+     object-position: center top;
+  border-radius: 140px 140px 42px 42px;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 1280px) and (max-width: 1440px), only screen and (min-width: 1441px) {
+  .about-tab-photo-image {
+    max-width: 520px;
+  }
+}
+
+.about-tab-years {
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .about-tab-years {
+    right: -12px;
+  }
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .featured-properties-space-left {
     padding-left: 60px;
