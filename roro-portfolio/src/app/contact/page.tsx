@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Contact — parlons de votre projet",
   description:
     "Contactez Romaric Bombade, développeur Full-Stack IA & SaaS à Abidjan. WhatsApp, email ou LinkedIn — devis gratuit et réponse rapide.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: "/contact/" },
 };
 
 const channels = [

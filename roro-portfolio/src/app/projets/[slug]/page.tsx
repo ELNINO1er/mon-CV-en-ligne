@@ -22,7 +22,7 @@ export async function generateMetadata({
   return {
     title: `${project.title} — ${project.category}`,
     description: project.summary,
-    alternates: { canonical: `/projets/${project.slug}` },
+    alternates: { canonical: `/projets/${project.slug}/` },
   };
 }
 
@@ -51,13 +51,13 @@ export default async function ProjectDetail({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Accueil", item: baseUrl },
-          { "@type": "ListItem", position: 2, name: "Projets", item: `${baseUrl}/projets` },
+          { "@type": "ListItem", position: 1, name: "Accueil", item: `${baseUrl}/` },
+          { "@type": "ListItem", position: 2, name: "Projets", item: `${baseUrl}/projets/` },
           {
             "@type": "ListItem",
             position: 3,
             name: project.title,
-            item: `${baseUrl}/projets/${project.slug}`,
+            item: `${baseUrl}/projets/${project.slug}/`,
           },
         ],
       },
@@ -66,7 +66,7 @@ export default async function ProjectDetail({
         name: project.title,
         headline: `${project.title} — ${project.category}`,
         description: project.summary,
-        url: `${baseUrl}/projets/${project.slug}`,
+        url: `${baseUrl}/projets/${project.slug}/`,
         inLanguage: "fr-FR",
         keywords: project.tech.join(", "),
         author: { "@type": "Person", name: site.name, url: baseUrl },

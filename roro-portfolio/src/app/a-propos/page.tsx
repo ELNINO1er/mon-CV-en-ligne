@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "À propos — parcours & expertise",
   description:
     "Romaric Bombade, développeur Full-Stack IA & SaaS : parcours, expertise, stack technique et approche orientée business. FinTech, AgriTech, e-commerce, santé et automatisation.",
-  alternates: { canonical: "/a-propos" },
+  alternates: { canonical: "/a-propos/" },
 };
 
 const domains = ["FinTech", "SaaS", "AgriTech", "E-commerce", "Santé digitale", "Automatisation", "UI/UX"];

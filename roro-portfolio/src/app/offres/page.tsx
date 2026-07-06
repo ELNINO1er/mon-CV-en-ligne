@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Offres & packs freelance",
   description:
     "Packs freelance clairs : site vitrine, application métier, SaaS / portail client, automatisation IA et e-commerce. Demandez un devis gratuit à Romaric Bombade.",
-  alternates: { canonical: "/offres" },
+  alternates: { canonical: "/offres/" },
 };
 
 const steps = [

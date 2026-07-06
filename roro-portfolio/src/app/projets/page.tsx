@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Projets & études de cas",
   description:
     "Études de cas de Romaric Bombade : plateformes FinTech, solutions AgriTech, e-commerce, santé digitale, réseau social sécurisé et automatisation IA.",
-  alternates: { canonical: "/projets" },
+  alternates: { canonical: "/projets/" },
 };
 
 export default function ProjetsPage() {
