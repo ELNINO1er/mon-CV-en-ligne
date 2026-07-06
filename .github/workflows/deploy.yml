@@ -1,0 +1,44 @@
+name: Build & publish (Hostinger)
+
+# Compile le portfolio Next.js (dossier roro-portfolio) et publie le site
+# statique généré (out/) sur la branche `hostinger-deploy`.
+# Hostinger déploie ensuite cette branche vers public_html.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permet un lancement manuel depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: roro-portfolio/package-lock.json
+
+      - name: Install dependencies
+        working-directory: roro-portfolio
+        run: npm ci
+
+      - name: Build static site
+        working-directory: roro-portfolio
+        run: npm run build
+
+      - name: Publish to hostinger-deploy branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./roro-portfolio/out
+          publish_branch: hostinger-deploy
+          force_orphan: true
+          commit_message: "deploy: build statique du portfolio"

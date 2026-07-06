@@ -8,3 +8,6 @@ roro-portfolio/out/
 .DS_Store
 Thumbs.db
 *.log
+
+# Artefacts de build/déploiement
+rorodev-site.zip
