@@ -1,2 +1,10 @@
-/config/contact.php
-/storage/*.sqlite
+# Dépendances & builds (le projet est dans roro-portfolio/, qui a son propre .gitignore)
+node_modules/
+roro-portfolio/node_modules/
+roro-portfolio/.next/
+roro-portfolio/out/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.log

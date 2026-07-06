@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import ParticleField from "./ParticleField";
 import RotatingWords from "./RotatingWords";
@@ -80,39 +81,35 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
         >
-          <div className="mock floaty">
-            <div className="mock-bar">
-              <span className="mock-dot" style={{ background: "#ff5f57" }} />
-              <span className="mock-dot" style={{ background: "#febc2e" }} />
-              <span className="mock-dot" style={{ background: "#28c840" }} />
-              <span className="mock-title mono">roro-systems — dashboard.tsx</span>
+          <div className="portrait floaty">
+            <div className="portrait-frame">
+              <Image
+                src="/img/romaric-portrait.jpg"
+                alt="Romaric Bombade, développeur Full-Stack IA & SaaS"
+                width={900}
+                height={1200}
+                priority
+                className="portrait-img"
+                sizes="(max-width: 960px) 80vw, 40vw"
+              />
+              <span className="portrait-ring" aria-hidden="true" />
             </div>
-            <div className="mock-body">
-              <pre className="mock-code mono">
-                <code>
-                  <span className="c-key">const</span> <span className="c-fn">app</span> ={" "}
-                  <span className="c-str">createSaaS</span>({"{"}
-                  {"\n"}  ia: <span className="c-num">true</span>,{"\n"}  multiTenant:{" "}
-                  <span className="c-num">true</span>,{"\n"}  secure: <span className="c-num">true</span>,
-                  {"\n"}{"}"});
-                </code>
-              </pre>
-              <div className="mock-kpis">
-                <div className="kpi">
-                  <span className="kpi-label">Utilisateurs</span>
-                  <span className="kpi-val">12,4k</span>
-                  <span className="kpi-bar"><i style={{ width: "78%" }} /></span>
-                </div>
-                <div className="kpi">
-                  <span className="kpi-label">Automatisations</span>
-                  <span className="kpi-val">340/j</span>
-                  <span className="kpi-bar"><i style={{ width: "64%" }} /></span>
-                </div>
-                <div className="kpi kpi--wide">
-                  <span className="kpi-label">Temps gagné</span>
-                  <span className="kpi-val text-grad-gold">+ 62%</span>
-                  <span className="kpi-spark" aria-hidden="true" />
-                </div>
+
+            <div className="portrait-card portrait-card--top glass">
+              <span className="pc-avail" aria-hidden="true" />
+              <div>
+                <span className="pc-title">Disponible</span>
+                <span className="pc-sub">Nouveaux projets freelance</span>
+              </div>
+            </div>
+
+            <div className="portrait-card portrait-card--bottom glass">
+              <span className="pc-icon">
+                <Icon name="Rocket" size={16} />
+              </span>
+              <div>
+                <span className="pc-val text-grad-gold">+ 62%</span>
+                <span className="pc-sub">de temps gagné pour mes clients</span>
               </div>
             </div>
           </div>
@@ -149,29 +146,38 @@ export default function Hero() {
         .hero-dot { width:4px; height:4px; border-radius:50%; background:var(--faint); }
 
         .hero-visual { position:relative; }
-        .mock {
-          position:relative; z-index:2; border-radius:20px; overflow:hidden;
+        .portrait { position:relative; z-index:2; max-width:420px; margin-inline:auto; }
+        .portrait-frame {
+          position:relative; border-radius:var(--radius-lg); overflow:hidden;
           border:1px solid var(--border-strong);
-          background:linear-gradient(180deg, rgba(20,22,34,.95), rgba(10,12,20,.95));
-          box-shadow: 0 40px 90px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06);
+          box-shadow:0 40px 90px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06);
+          background:linear-gradient(180deg, rgba(124,92,255,.12), rgba(10,12,20,.4));
         }
-        .mock-bar { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); background:rgba(255,255,255,.02); }
-        .mock-dot { width:11px; height:11px; border-radius:50%; }
-        .mock-title { margin-left:10px; font-size:.74rem; color:var(--faint); }
-        .mock-body { padding:20px; display:flex; flex-direction:column; gap:18px; }
-        .mock-code { margin:0; font-size:.82rem; line-height:1.7; color:#c7cbe0; background:rgba(0,0,0,.25); padding:16px; border-radius:12px; border:1px solid var(--border); overflow:auto; }
-        .c-key { color:#7c9cff; } .c-fn { color:var(--cyan); } .c-str { color:var(--gold); } .c-num { color:#34d399; }
-        .mock-kpis { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-        .kpi { padding:14px; border-radius:13px; background:var(--surface); border:1px solid var(--border); display:flex; flex-direction:column; gap:7px; }
-        .kpi--wide { grid-column:1/-1; }
-        .kpi-label { font-size:.72rem; color:var(--faint); text-transform:uppercase; letter-spacing:.08em; }
-        .kpi-val { font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:#fff; }
-        .kpi-bar { height:6px; border-radius:6px; background:rgba(255,255,255,.08); overflow:hidden; }
-        .kpi-bar i { display:block; height:100%; border-radius:6px; background:linear-gradient(90deg,var(--violet),var(--cyan)); }
-        .kpi-spark { height:34px; border-radius:8px; background:
-          linear-gradient(90deg, transparent, rgba(245,197,66,.06)),
-          repeating-linear-gradient(90deg, rgba(245,197,66,.35) 0 2px, transparent 2px 14px);
-          mask-image:linear-gradient(180deg, transparent, #000 60%); }
+        .portrait-img { display:block; width:100%; height:auto; object-fit:cover; }
+        .portrait-frame::after {
+          content:""; position:absolute; inset:0; pointer-events:none;
+          background:linear-gradient(180deg, transparent 55%, rgba(5,6,11,.55));
+        }
+        .portrait-ring {
+          position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+          box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+        }
+        .portrait::before {
+          content:""; position:absolute; inset:-24px; z-index:-1; border-radius:calc(var(--radius-lg) + 24px);
+          background:radial-gradient(60% 55% at 50% 25%, rgba(124,92,255,.4), transparent 70%);
+          filter:blur(36px);
+        }
+        .portrait-card {
+          position:absolute; z-index:3; display:flex; align-items:center; gap:11px;
+          padding:12px 15px; border-radius:16px; box-shadow:0 18px 40px -18px rgba(0,0,0,.8);
+        }
+        .portrait-card--top { top:22px; left:-26px; }
+        .portrait-card--bottom { bottom:26px; right:-30px; }
+        .pc-title { display:block; color:#fff; font-weight:700; font-size:.9rem; }
+        .pc-sub { display:block; color:var(--muted); font-size:.72rem; }
+        .pc-val { display:block; font-family:var(--font-display); font-weight:700; font-size:1.25rem; }
+        .pc-avail { width:10px; height:10px; border-radius:50%; background:#34d399; box-shadow:0 0 0 4px rgba(52,211,153,.2); animation:pulse-ring 2.4s ease-out infinite; }
+        .pc-icon { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:10px; color:#fff; background:linear-gradient(135deg,var(--violet),var(--cyan)); flex:none; }
 
         .hero-chip {
           position:absolute; z-index:3; transform:translate(-50%,-50%);
@@ -190,6 +196,8 @@ export default function Hero() {
         }
         @media (max-width:600px){
           .hero-chip{ display:none; }
+          .portrait-card--top{ left:6px; }
+          .portrait-card--bottom{ right:6px; }
         }
       `}</style>
     </section>

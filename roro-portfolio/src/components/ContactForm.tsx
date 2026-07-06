@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Icon from "./Icon";
 import { site, whatsappUrl, mailtoUrl } from "@/lib/site";
 
@@ -14,7 +15,19 @@ const subjects = [
   "Autre",
 ];
 
-export default function ContactForm({ defaultSubject }: { defaultSubject?: string }) {
+const packToSubject: Record<string, string> = {
+  "site-vitrine": "Site web professionnel",
+  "application-metier": "Application web / métier",
+  "saas-portail": "Plateforme SaaS / portail client",
+  "automatisation-ia": "Automatisation IA",
+  ecommerce: "E-commerce",
+};
+
+export default function ContactForm() {
+  const searchParams = useSearchParams();
+  const pack = searchParams.get("pack") ?? "";
+  const defaultSubject = packToSubject[pack];
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState(

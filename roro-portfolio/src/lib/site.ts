@@ -16,7 +16,7 @@ export const site = {
 
   // Domaine de production — via variable d'env sur Vercel (NEXT_PUBLIC_SITE_URL),
   // sinon valeur par défaut ci-dessous à mettre à jour avant mise en ligne.
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://romaricbombade.com",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://rorodev.mhtechconsulting.com",
 
   // Coordonnées
   email: "dromaric58@gmail.com",

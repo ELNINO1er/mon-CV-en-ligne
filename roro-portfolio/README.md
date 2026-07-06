@@ -53,11 +53,21 @@ La section témoignages est **prête mais désactivée** (`SHOW_TESTIMONIALS = f
 
 Le bandeau « Ils m'ont fait confiance » (`trustedBrands`) reprend des structures réelles de votre parcours — ajustez la liste si besoin.
 
-## Déploiement (Vercel)
+## Déploiement — Hostinger (hébergement mutualisé)
 
-1. Poussez `roro-portfolio/` sur un repo Git.
-2. Sur [vercel.com](https://vercel.com) → **New Project** → importez le repo (root = `roro-portfolio`).
-3. Ajoutez la variable d'environnement **`NEXT_PUBLIC_SITE_URL`** = votre domaine (`https://…`).
-4. Déployez. `vercel.json` ajoute déjà des en-têtes de sécurité.
+Le site est configuré en **export statique** (`output: "export"`), donc pas besoin de Node côté serveur : on upload un dossier de fichiers HTML/CSS/JS.
 
-> Ce site tourne sur Node/Vercel — **pas sur WAMP**. L'ancien site HTML/PHP reste à la racine du dépôt.
+1. Mettre le domaine dans `NEXT_PUBLIC_SITE_URL` (fichier `.env.local` ou `src/lib/site.ts`).
+2. Générer le site :
+   ```bash
+   npm run build      # crée le dossier out/
+   ```
+3. Uploader **le contenu de `out/`** (pas le dossier lui-même) dans `public_html/` :
+   - hPanel → **Gestionnaire de fichiers** → `public_html` → glisser-déposer un zip de `out/` puis extraire, **ou** via FTP (FileZilla).
+4. Vérifier que `public_html/index.html` existe. C'est en ligne.
+
+À chaque mise à jour : `npm run build` puis re-upload de `out/`.
+
+## Déploiement — Vercel (alternative)
+
+Importer le repo sur [vercel.com](https://vercel.com), définir `NEXT_PUBLIC_SITE_URL`, déployer. `vercel.json` ajoute des en-têtes de sécurité.

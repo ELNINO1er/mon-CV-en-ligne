@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import PageHero from "@/components/PageHero";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
@@ -10,14 +11,6 @@ export const metadata: Metadata = {
   description:
     "Contactez Romaric Bombade, développeur Full-Stack IA & SaaS à Abidjan. WhatsApp, email ou LinkedIn — devis gratuit et réponse rapide.",
   alternates: { canonical: "/contact" },
-};
-
-const packToSubject: Record<string, string> = {
-  "site-vitrine": "Site web professionnel",
-  "application-metier": "Application web / métier",
-  "saas-portail": "Plateforme SaaS / portail client",
-  "automatisation-ia": "Automatisation IA",
-  ecommerce: "E-commerce",
 };
 
 const channels = [
@@ -47,14 +40,7 @@ const channels = [
   },
 ];
 
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ pack?: string }>;
-}) {
-  const { pack } = await searchParams;
-  const defaultSubject = pack ? packToSubject[pack] : undefined;
-
+export default function ContactPage() {
   return (
     <>
       <PageHero
@@ -99,7 +85,9 @@ export default async function ContactPage({
 
           <div className="contact-form-wrap">
             <Reveal>
-              <ContactForm defaultSubject={defaultSubject} />
+              <Suspense fallback={null}>
+                <ContactForm />
+              </Suspense>
             </Reveal>
           </div>
         </div>
