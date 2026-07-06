@@ -53,7 +53,23 @@ La section témoignages est **prête mais désactivée** (`SHOW_TESTIMONIALS = f
 
 Le bandeau « Ils m'ont fait confiance » (`trustedBrands`) reprend des structures réelles de votre parcours — ajustez la liste si besoin.
 
-## Déploiement — Hostinger (hébergement mutualisé)
+## Déploiement — Hostinger via GitHub (automatique) ✅
+
+Pipeline en place (`.github/workflows/deploy.yml` à la racine du dépôt) :
+
+`git push` sur `main` → GitHub Action compile `roro-portfolio/` → publie `out/` sur la branche **`hostinger-deploy`** → Hostinger déploie cette branche vers `public_html`.
+
+**Configuration Hostinger (une seule fois)** — écran *Déployer depuis GitHub* :
+- Dépôt : `ELNINO1er/mon-CV-en-ligne`
+- Branche : **`hostinger-deploy`** (⚠️ pas `main`)
+- Répertoire racine : `public_html`
+- Activer le **déploiement automatique** (webhook) pour redéployer à chaque push.
+
+**Mise à jour du site** : modifier le code → `git push` → tout est automatique.
+
+> Si l'Action échoue sur l'étape de publication (erreur 403), aller sur GitHub → Settings → Actions → General → *Workflow permissions* → cocher **Read and write permissions**.
+
+## Déploiement — Hostinger (upload manuel, sans GitHub)
 
 Le site est configuré en **export statique** (`output: "export"`), donc pas besoin de Node côté serveur : on upload un dossier de fichiers HTML/CSS/JS.
 
