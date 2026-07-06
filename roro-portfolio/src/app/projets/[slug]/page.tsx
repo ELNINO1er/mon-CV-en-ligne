@@ -44,8 +44,44 @@ export default async function ProjectDetail({
   const idx = projects.findIndex((p) => p.slug === slug);
   const next = projects[(idx + 1) % projects.length];
 
+  const baseUrl = site.siteUrl.replace(/\/$/, "");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Accueil", item: baseUrl },
+          { "@type": "ListItem", position: 2, name: "Projets", item: `${baseUrl}/projets` },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: project.title,
+            item: `${baseUrl}/projets/${project.slug}`,
+          },
+        ],
+      },
+      {
+        "@type": "CreativeWork",
+        name: project.title,
+        headline: `${project.title} — ${project.category}`,
+        description: project.summary,
+        url: `${baseUrl}/projets/${project.slug}`,
+        inLanguage: "fr-FR",
+        keywords: project.tech.join(", "),
+        author: { "@type": "Person", name: site.name, url: baseUrl },
+        creator: { "@type": "Person", name: site.name },
+        about: project.category,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article>
         {/* Hero */}
         <section className="pd-hero">
