@@ -1,13 +1,27 @@
-# Dépendances & builds (le projet est dans roro-portfolio/, qui a son propre .gitignore)
-node_modules/
-roro-portfolio/node_modules/
-roro-portfolio/.next/
-roro-portfolio/out/
+# Dépendances
+/node_modules
+/.pnp
+.pnp.*
+
+# Next.js
+/.next/
+/out/
+/build
+
+# Production / déploiement
+rorodev-site.zip
+
+# Env
+.env*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
 
 # OS / éditeurs
 .DS_Store
 Thumbs.db
 *.log
 
-# Artefacts de build/déploiement
-rorodev-site.zip
+# Vercel
+.vercel

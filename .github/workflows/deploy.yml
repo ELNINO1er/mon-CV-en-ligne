@@ -1,13 +1,19 @@
 name: Build & publish (Hostinger)
 
-# Compile le portfolio Next.js (dossier roro-portfolio) et publie le site
-# statique généré (out/) sur la branche `hostinger-deploy`.
-# Hostinger déploie ensuite cette branche vers public_html.
+# Compile le portfolio Next.js (racine du dépôt) et publie le site statique
+# généré (out/) sur la branche `hostinger-deploy`, que Hostinger déploie vers public_html.
+#
+# ⚠️ À RÉSOUDRE AVANT RÉACTIVATION AUTOMATIQUE :
+# Le projet utilise `src/proxy.ts` (middleware de routing des langues FR/EN),
+# incompatible avec l'export statique (`output: "export"`). Il faut soit :
+#   - rendre le routing i18n 100 % statique (préfixes /fr et /en générés, sans réécriture), soit
+#   - déployer sur un hébergement Node (Vercel, VPS) au lieu d'un hébergement statique.
+# Tant que ce n'est pas tranché, le workflow est en déclenchement manuel uniquement.
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch: # permet un lancement manuel depuis l'onglet Actions
+  workflow_dispatch: # lancement manuel depuis l'onglet Actions
+  # push:
+  #   branches: [main]
 
 permissions:
   contents: write
@@ -24,21 +30,21 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: roro-portfolio/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        working-directory: roro-portfolio
         run: npm ci
 
       - name: Build static site
-        working-directory: roro-portfolio
         run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://romaricbombade.com
 
       - name: Publish to hostinger-deploy branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./roro-portfolio/out
+          publish_dir: ./out
           publish_branch: hostinger-deploy
           force_orphan: true
           commit_message: "deploy: build statique du portfolio"
