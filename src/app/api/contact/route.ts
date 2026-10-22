@@ -7,7 +7,11 @@ const attempts = new Map<string, { count: number; expires: number }>();
 
 export async function POST(request: NextRequest) {
   const origin = request.headers.get("origin");
-  if (!origin || origin !== request.nextUrl.origin) {
+  // Hostinger terminates HTTPS before forwarding to Next's internal address.
+  const publicOrigin = process.env.NEXT_PUBLIC_SITE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
+    : request.nextUrl.origin;
+  if (!origin || origin !== publicOrigin) {
     return NextResponse.json({ error: "Invalid origin" }, { status: 403 });
   }
   if (Number(request.headers.get("content-length")) > 16000) {
