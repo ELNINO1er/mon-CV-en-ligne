@@ -54,7 +54,7 @@ export function Header() {
         <div
           aria-hidden
           className={cn(
-            "pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-bg via-bg/70 to-transparent transition-opacity duration-500",
+            "pointer-events-none absolute inset-x-0 top-0 h-28 bg-bg/95 transition-opacity duration-500",
             scrolled ? "opacity-100" : "opacity-0"
           )}
         />

@@ -62,11 +62,7 @@ export function ProjectsGrid() {
             >
               <Link href={href(`/projects/${p.slug}`)} data-cursor={t.ui.cursor.view} className="group block" style={{ "--accent": p.accent } as React.CSSProperties}>
                 <div className="relative overflow-hidden rounded-2xl border border-line bg-surface p-4 transition-colors duration-500 group-hover:border-line-strong sm:p-6">
-                  <div
-                    aria-hidden
-                    className="absolute -bottom-1/3 left-1/2 h-2/3 w-2/3 -translate-x-1/2 rounded-full opacity-[var(--glow)] blur-[70px] transition-opacity duration-700 group-hover:opacity-40"
-                    style={{ background: p.accent }}
-                  />
+
                   <ProductMockup project={p} className="relative transition-transform duration-700 ease-out-expo group-hover:scale-[1.025]" />
                 </div>
                 <div className="mt-5 flex items-start justify-between gap-4">

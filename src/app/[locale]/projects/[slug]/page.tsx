@@ -65,7 +65,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
     <article style={{ "--accent": p.accent } as React.CSSProperties}>
       {/* Hero projet */}
       <header className="relative overflow-hidden pb-12 pt-36 md:pt-44">
-        <div aria-hidden className="absolute left-1/2 top-0 h-[50vh] w-[70vw] -translate-x-1/2 rounded-full opacity-[var(--glow)] blur-[120px]" style={{ background: p.accent }} />
+
         <div className="container-x relative">
           <Reveal blur={false} y={10}>
             <Link href={localePath(locale, "/projects")} className="group mb-12 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg">
@@ -160,7 +160,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
               {p.solution && (
                 <Reveal delay={0.1}>
                   <div className="relative h-full overflow-hidden rounded-2xl border border-line-strong bg-surface p-7">
-                    <div aria-hidden className="absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-30 blur-[60px]" style={{ background: p.accent }} />
+
                     <p className="label-mono relative" style={{ color: p.accent }}>
                       {t.solution}
                     </p>
@@ -274,7 +274,7 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/proje
         <div
           aria-hidden
           className="absolute inset-0 origin-bottom scale-y-0 transition-transform duration-700 ease-out-expo group-hover:scale-y-100"
-          style={{ background: `linear-gradient(to top, color-mix(in srgb, ${next.accent} 16%, transparent), transparent)` }}
+          style={{ background: `color-mix(in srgb, ${next.accent} 6%, transparent)` }}
         />
         <div className="container-x relative flex items-end justify-between gap-8">
           <div>

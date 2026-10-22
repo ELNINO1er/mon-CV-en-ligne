@@ -99,10 +99,7 @@ export function HeroCanvas() {
         const [x1, y1, x2, y2] = p.horizontal
           ? [p.pos - p.len, p.line, p.pos, p.line]
           : [p.line, p.pos - p.len, p.line, p.pos];
-        const g = ctx.createLinearGradient(x1, y1, x2, y2);
-        g.addColorStop(0, `rgba(${colors.line},0)`);
-        g.addColorStop(1, `rgba(${colors.line},0.55)`);
-        ctx.strokeStyle = g;
+        ctx.strokeStyle = `rgba(${colors.line},0.4)`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x1 + 0.5, y1 + 0.5);
@@ -113,14 +110,6 @@ export function HeroCanvas() {
       // Halo curseur
       mouse.x += (mouse.tx - mouse.x) * 0.08;
       mouse.y += (mouse.ty - mouse.y) * 0.08;
-      if (mouse.x > -1000) {
-        const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 320);
-        glow.addColorStop(0, `rgba(${colors.line},0.10)`);
-        glow.addColorStop(1, `rgba(${colors.line},0)`);
-        ctx.fillStyle = glow;
-        ctx.fillRect(mouse.x - 320, mouse.y - 320, 640, 640);
-      }
-
       // Particules + connexions
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];

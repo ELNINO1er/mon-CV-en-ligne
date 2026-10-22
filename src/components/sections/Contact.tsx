@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Check, Copy, Mail, MessageCircle, Phone } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
@@ -15,7 +15,8 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   const c = t.contact;
   const [copied, setCopied] = useState(false);
   const [type, setType] = useState(0);
-  const area = useRef<HTMLDivElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const french = c.send === "Envoyer";
 
   const copy = async () => {
     try {
@@ -27,12 +28,24 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
     }
   };
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const subject = `[${c.types[type]}] — ${data.get("name")}`;
-    const body = `${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`;
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (status === "sending") return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setStatus("sending");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: data.get("name"), email: data.get("email"), message: data.get("message"), type: c.types[type], website: data.get("website") }),
+      });
+      if (!response.ok) throw new Error("Send failed");
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   const channels = [
@@ -48,24 +61,13 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
       id="contact"
       className="relative overflow-hidden py-28 md:py-40"
       aria-label={c.label}
-      onPointerMove={(e) => {
-        const r = area.current?.getBoundingClientRect();
-        if (!r || !area.current) return;
-        area.current.style.setProperty("--x", `${e.clientX - r.left}px`);
-        area.current.style.setProperty("--y", `${e.clientY - r.top}px`);
-      }}
     >
-      <div
-        ref={area}
-        aria-hidden
-        className="pointer-events-none absolute inset-0 [background:radial-gradient(600px_circle_at_var(--x,50%)_var(--y,30%),color-mix(in_srgb,var(--violet)_14%,transparent),transparent_50%)]"
-      />
-      <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-96 w-96 animate-aurora rounded-full bg-coral/15 blur-[110px]" />
+
       <div className="container-x relative">
         <Reveal blur={false} y={12}>
           <p className="label-mono mb-8 flex items-center gap-3">
             <span className="text-coral">07</span>
-            <span className="h-px w-8 bg-gradient-to-r from-coral to-transparent" />
+            <span className="h-px w-8 bg-brand" />
             {c.label}
           </p>
         </Reveal>
@@ -85,7 +87,7 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
               className="group flex items-center gap-4 rounded-full border border-line-strong bg-surface py-2 pl-6 pr-2 text-lg tracking-tight transition-colors hover:border-fg/30 md:text-2xl"
             >
               {profile.email}
-              <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-brand to-violet text-white">
+              <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-brand text-[var(--on-accent)]">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={copied ? "ok" : "copy"}
@@ -141,7 +143,8 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
 
           <Reveal delay={0.1}>
             <form onSubmit={submit} className="relative overflow-hidden rounded-2xl border border-line bg-surface/80 p-6 backdrop-blur md:p-8">
-              <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-brand via-violet to-coral" />
+              <div hidden aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+              <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-brand" />
               <fieldset>
                 <legend className="label-mono mb-4">{c.legend}</legend>
                 <div className="flex flex-wrap gap-2">
@@ -167,12 +170,15 @@ export function Contact({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
               </div>
               <Field name="message" label={c.message} textarea className="mt-6" />
               <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                <p className="text-xs text-dim">{c.hint}</p>
+                <p role="status" aria-live="polite" className="max-w-sm text-xs text-muted">
+                  {status === "sent" ? (french ? "Message envoyé. Merci, je vous répondrai par e-mail." : "Message sent. Thank you, I will reply by email.") : status === "error" ? (french ? "L’envoi a échoué. Réessayez ou écrivez directement à dromaric58@gmail.com." : "Sending failed. Try again or email dromaric58@gmail.com directly.") : c.hint}
+                </p>
                 <button
                   type="submit"
-                  className="group inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-brand to-violet px-6 text-sm font-medium text-white shadow-[0_10px_30px_-10px_color-mix(in_srgb,var(--violet)_70%,transparent)] transition-opacity hover:opacity-90"
+                  disabled={status === "sending"}
+                  className="group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 text-sm font-medium text-[var(--on-accent)] transition-opacity hover:opacity-90 disabled:opacity-50"
                 >
-                  {c.send}
+                  {status === "sending" ? (french ? "Envoi…" : "Sending…") : c.send}
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </button>
               </div>
@@ -204,9 +210,9 @@ function Field({
   return (
     <div className={cn("relative", className)}>
       {textarea ? (
-        <textarea id={name} name={name} required rows={4} placeholder={label} className={cn(base, "resize-none")} />
+        <textarea id={name} name={name} required minLength={10} maxLength={5000} rows={4} placeholder={label} className={cn(base, "resize-none")} />
       ) : (
-        <input id={name} name={name} type={type} required placeholder={label} autoComplete={autoComplete} className={base} />
+        <input id={name} name={name} type={type} required maxLength={name === "email" ? 254 : 100} placeholder={label} autoComplete={autoComplete} className={base} />
       )}
       <label
         htmlFor={name}

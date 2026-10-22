@@ -19,7 +19,7 @@ export function SectionHeading({ index, label, title, description, className, as
       <Reveal blur={false} y={12}>
         <p className="label-mono mb-6 flex items-center gap-3">
           <span style={{ color }}>{index}</span>
-          <span className="h-px w-8" style={{ background: `linear-gradient(to right, ${color}, transparent)` }} />
+          <span className="h-px w-8" style={{ background: color }} />
           {label}
         </p>
       </Reveal>

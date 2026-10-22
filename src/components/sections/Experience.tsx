@@ -35,7 +35,7 @@ export function Experience({ headingAs = "h2", showEducation = true }: { heading
             <motion.span
               aria-hidden
               style={{ scaleY: fill }}
-              className="absolute bottom-2 left-[7px] top-2 w-px origin-top bg-gradient-to-b from-violet via-brand to-amber"
+              className="absolute bottom-2 left-[7px] top-2 w-px origin-top bg-brand"
             />
             {experiences.map((exp, i) => (
               <motion.li
@@ -93,7 +93,7 @@ export function Experience({ headingAs = "h2", showEducation = true }: { heading
                     transition={{ duration: 0.8, delay: i * 0.08, ease: EASE }}
                     className="relative flex flex-col justify-between gap-2 overflow-hidden rounded-xl border border-line bg-surface p-5 sm:flex-row sm:items-center"
                   >
-                    <span aria-hidden className="absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-brand to-violet" />
+                    <span aria-hidden className="absolute inset-y-0 left-0 w-0.5 bg-brand" />
                     <div>
                       <p className="font-medium tracking-tight">{tr(ed.title)}</p>
                       <p className="mt-1 text-sm text-muted">

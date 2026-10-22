@@ -212,12 +212,9 @@ html.lenis body {
   -webkit-text-stroke: 1px var(--stroke);
 }
 
-/* Dégradé de marque pour les mots mis en valeur */
+/* Accent uni de marque pour les mots mis en valeur */
 @utility text-gradient {
-  background-image: linear-gradient(100deg, var(--brand) 0%, var(--violet) 50%, var(--cyan) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--brand);
 }
 
 @utility label-mono {
@@ -287,11 +284,7 @@ html.lenis body {
   z-index: -1;
   opacity: 0;
   transition: opacity 0.5s var(--ease-out-expo);
-  background: radial-gradient(
-    520px circle at var(--x) var(--y),
-    color-mix(in srgb, var(--accent, var(--brand)) 16%, transparent),
-    transparent 45%
-  );
+  background: transparent;
 }
 .spotlight:hover::before {
   opacity: 1;

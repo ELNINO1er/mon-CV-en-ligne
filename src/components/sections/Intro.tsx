@@ -36,7 +36,7 @@ export function Intro() {
       <div className="container-x">
         <p className="label-mono mb-10 flex items-center gap-3">
           <span className="text-brand">01</span>
-          <span className="h-px w-8 bg-gradient-to-r from-brand to-transparent" />
+          <span className="h-px w-8 bg-brand" />
           {t.intro.label}
         </p>
         <p ref={ref} className="max-w-6xl text-[clamp(1.75rem,4.2vw,3.6rem)] font-medium leading-[1.12] tracking-[-0.035em]">
@@ -53,7 +53,7 @@ export function Intro() {
             return (
               <StaggerItem key={p.title}>
                 <SpotlightCard className="relative h-full overflow-hidden p-7" tilt accent={color}>
-                  <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${color}, transparent)` }} />
+                  <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: color }} />
                   <div className="flex items-center justify-between">
                     <span
                       className="grid h-10 w-10 place-items-center rounded-xl"

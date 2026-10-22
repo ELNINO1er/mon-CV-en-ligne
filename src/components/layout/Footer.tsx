@@ -18,8 +18,8 @@ export function Footer() {
 
   return (
     <footer className="relative overflow-hidden pt-20">
-      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent opacity-60" />
-      <div aria-hidden className="absolute left-1/2 top-0 h-40 w-[50vw] -translate-x-1/2 rounded-full bg-violet/10 blur-[90px]" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-brand opacity-60" />
+
       <div className="container-x relative grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
           <Link href={href("/")} aria-label={`RoroDev — ${t.nav.home}`} className="mb-6 inline-flex items-center gap-3 rounded-xl">

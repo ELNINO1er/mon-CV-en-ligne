@@ -5,7 +5,7 @@ export function PageHeader({ label, title, description }: { label: string; title
   return (
     <header className="relative overflow-hidden pb-16 pt-40 md:pb-24 md:pt-48">
       <div aria-hidden className="bg-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_top,#000_20%,transparent_70%)]" />
-      <div aria-hidden className="absolute left-1/2 top-0 h-64 w-[60vw] -translate-x-1/2 rounded-full bg-accent/10 blur-[100px]" />
+
       <div className="container-x relative">
         <Reveal blur={false} y={12}>
           <p className="label-mono mb-6">{label}</p>

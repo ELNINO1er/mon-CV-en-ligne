@@ -53,7 +53,7 @@ export function FeaturedProjects() {
         <SectionHeading index="02" label={t.featured.label} title={t.featured.title} color="var(--color-violet)" />
         <div className="hidden w-48 shrink-0 pb-3 lg:block">
           <span className="block h-px w-full overflow-hidden bg-line-strong">
-            <span ref={bar} className="block h-full w-full origin-left scale-x-0 bg-gradient-to-r from-brand via-violet to-cyan" />
+            <span ref={bar} className="block h-full w-full origin-left scale-x-0 bg-brand" />
           </span>
           <p className="label-mono mt-3 text-right">{t.featured.scroll}</p>
         </div>
@@ -68,7 +68,7 @@ export function FeaturedProjects() {
           data-cursor={t.ui.cursor.all}
           className="group relative flex min-h-48 items-center justify-center overflow-hidden rounded-2xl border border-dashed border-line-strong p-10 transition-colors hover:border-fg/30 lg:min-h-0 lg:w-[22vw]"
         >
-          <span aria-hidden className="absolute inset-0 bg-gradient-to-br from-brand/10 via-violet/10 to-cyan/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <span aria-hidden className="absolute inset-0 bg-brand opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           <span className="relative flex items-center gap-3 text-2xl font-medium tracking-tight">
             {t.featured.all(projects.length)}
             <ArrowUpRight className="h-6 w-6 transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -93,12 +93,8 @@ function FeaturedCard({ project }: { project: Project }) {
         e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
       }}
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -bottom-1/3 -right-1/4 h-[80%] w-[70%] rounded-full opacity-[var(--glow)] blur-[90px] transition-opacity duration-700 group-hover:opacity-30"
-        style={{ background: project.accent }}
-      />
-      <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${project.accent}, transparent)` }} />
+
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: project.accent }} />
       <div className="relative flex flex-col lg:w-[38%] lg:shrink-0">
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs" style={{ color: project.accent }}>

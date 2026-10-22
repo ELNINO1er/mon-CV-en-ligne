@@ -53,7 +53,7 @@ export function SelectedWork() {
                 <span
                   aria-hidden
                   className="absolute inset-0 origin-bottom scale-y-0 transition-transform duration-500 ease-out-expo group-hover:scale-y-100"
-                  style={{ background: `linear-gradient(to right, color-mix(in srgb, ${p.accent} 9%, transparent), transparent 70%)` }}
+                  style={{ background: `color-mix(in srgb, ${p.accent} 9%, transparent)` }}
                 />
                 <span className="relative font-mono text-xs text-dim transition-colors group-hover:text-[var(--c)]">{projectIndex(p.slug)}</span>
                 <span className="relative">

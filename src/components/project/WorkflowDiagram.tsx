@@ -65,8 +65,8 @@ export function WorkflowDiagram({
                 className={cn(
                   "absolute",
                   small
-                    ? "inset-y-0 left-0 w-1/2 animate-flow bg-gradient-to-r from-transparent to-[var(--accent)]"
-                    : "inset-x-0 top-0 h-1/2 bg-gradient-to-b from-transparent to-[var(--accent)] md:inset-y-0 md:left-0 md:h-full md:w-1/2 md:animate-flow md:bg-gradient-to-r"
+                    ? "inset-y-0 left-0 w-1/2 animate-flow bg-brand"
+                    : "inset-x-0 top-0 h-1/2 bg-brand md:inset-y-0 md:left-0 md:h-full md:w-1/2 md:animate-flow md:bg-brand"
                 )}
                 style={{ animationDelay: `${i * 0.25}s` }}
               />

@@ -19,7 +19,7 @@ export function ProductMockup({ project, className, compact }: { project: Projec
       )}
       aria-hidden
     >
-      <div className="pointer-events-none absolute -top-1/3 left-1/4 h-2/3 w-1/2 rounded-full opacity-30 blur-[80px]" style={{ background: project.accent }} />
+
       <Chrome title={project.url ? project.url.replace(/^https?:\/\//, "") : project.name} />
       <div className="absolute inset-x-0 bottom-0 top-8">
         {project.mockup === "dashboard" && <Dashboard project={project} compact={compact} />}
@@ -169,7 +169,7 @@ function Wedding() {
   const fr = locale === "fr";
   return (
     <div className="flex h-full items-center justify-center gap-4 p-4">
-      <div className="flex h-full w-[34%] flex-col items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-transparent p-3 text-center">
+      <div className="flex h-full w-[34%] flex-col items-center justify-center rounded-2xl border border-white/10 bg-brand p-3 text-center">
         <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/40">{fr ? "Vous êtes invités" : "You are invited"}</span>
         <span className="mt-2 font-serif text-[clamp(14px,2.2vw,26px)] italic leading-none text-white/90">{fr ? "Réservez la date" : "Save the date"}</span>
         <span className="my-3 h-px w-10" style={{ background: "var(--accent)" }} />
@@ -263,14 +263,14 @@ function Store({ project }: { project: Project }) {
           {fr ? "Panier" : "Cart"}
         </span>
       </div>
-      <div className="mt-3 rounded-lg p-3" style={{ background: "linear-gradient(120deg, color-mix(in srgb, var(--accent) 35%, transparent), transparent)" }}>
+      <div className="mt-3 rounded-lg p-3" style={{ background: "color-mix(in srgb, var(--accent) 15%, transparent)" }}>
         <span className="block h-2.5 w-2/5 rounded bg-white/30" />
         <span className="mt-1.5 block h-2 w-1/4 rounded bg-white/15" />
       </div>
       <div className="mt-3 grid flex-1 grid-cols-3 gap-2">
         {items.map((name) => (
           <div key={name} className="flex flex-col rounded-lg border border-white/[0.07] bg-white/[0.02] p-2">
-            <span className="flex-1 rounded-md" style={{ background: "radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 70%)" }} />
+            <span className="flex-1 rounded-md" style={{ background: "color-mix(in srgb, var(--accent) 20%, transparent)" }} />
             <span className="mt-1.5 truncate text-[8px] text-white/80">{name}</span>
             <span className="mt-1 rounded py-0.5 text-center text-[6px] font-medium text-black" style={{ background: "var(--accent)" }}>
               {fr ? "Ajouter" : "Add"}
@@ -303,7 +303,7 @@ function News({ project }: { project: Project }) {
       </div>
       <div className="mt-3 grid flex-1 grid-cols-3 gap-2">
         <div className="col-span-2 flex flex-col rounded-lg border border-white/[0.07] bg-white/[0.02] p-2">
-          <span className="flex-1 rounded-md bg-gradient-to-br from-white/10 to-transparent" />
+          <span className="flex-1 rounded-md bg-brand" />
           <span className="mt-2 block h-2 w-4/5 rounded bg-white/25" />
           <span className="mt-1 block h-1.5 w-3/5 rounded bg-white/10" />
         </div>

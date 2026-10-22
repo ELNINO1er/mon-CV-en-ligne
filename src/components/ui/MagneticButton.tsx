@@ -52,7 +52,7 @@ export function MagneticButton({
   const classes = cn(
     "group relative inline-flex h-12 items-center gap-2 overflow-hidden rounded-full px-6 text-sm font-medium tracking-tight transition-colors duration-300",
     variant === "primary"
-      ? "bg-fg text-bg shadow-[0_8px_30px_-12px_color-mix(in_srgb,var(--brand)_60%,transparent)] hover:opacity-90"
+      ? "bg-fg text-bg  hover:opacity-90"
       : "border border-line-strong text-fg hover:border-fg/30 hover:bg-fg/[0.04]",
     className
   );

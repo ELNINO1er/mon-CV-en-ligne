@@ -102,7 +102,7 @@ const fr = {
     name: "Votre nom",
     email: "Email",
     message: "Parlez-moi de votre projet",
-    hint: "Ouvre votre application email avec le message prêt à envoyer.",
+    hint: "Votre message est envoyé directement à mon adresse e-mail.",
     send: "Envoyer",
   },
   footer: {
@@ -258,7 +258,7 @@ const en: Dictionary = {
     name: "Your name",
     email: "Email",
     message: "Tell me about your project",
-    hint: "Opens your email app with the message ready to send.",
+    hint: "Your message is sent directly to my email address.",
     send: "Send message",
   },
   footer: {

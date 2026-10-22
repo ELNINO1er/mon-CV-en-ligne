@@ -25,7 +25,7 @@ export function RotatingWord({ words, interval = 2600 }: { words: string[]; inte
           animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
           exit={{ y: "-70%", opacity: 0, filter: "blur(8px)" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="col-start-1 row-start-1 whitespace-nowrap bg-gradient-to-r from-accent to-cyan bg-clip-text text-transparent"
+          className="col-start-1 row-start-1 whitespace-nowrap text-brand"
         >
           {words[i]}
         </motion.span>
