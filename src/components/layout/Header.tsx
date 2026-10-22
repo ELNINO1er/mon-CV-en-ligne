@@ -79,7 +79,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={href(item.href)}
-                className={cn("relative rounded-full px-3.5 py-2 text-[13px] transition-colors lg:px-4", isActive(item.href) ? "text-fg" : "text-muted hover:text-fg")}
+                className={cn("relative whitespace-nowrap rounded-full px-3 py-2 text-[13px] transition-colors lg:px-4", isActive(item.href) ? "text-fg" : "text-muted hover:text-fg")}
               >
                 {isActive(item.href) && (
                   <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-fg/[0.07]" transition={{ type: "spring", stiffness: 380, damping: 32 }} />

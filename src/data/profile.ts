@@ -19,6 +19,7 @@ export const profile = {
 };
 
 export const navItems = [
+  { href: "/services", key: "services" },
   { href: "/projects", key: "work" },
   { href: "/about", key: "about" },
   { href: "/experience", key: "experience" },
