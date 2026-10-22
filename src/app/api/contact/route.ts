@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
   if (rate.count >= 5) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   rate.count++;
   attempts.set(ip, rate);
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  const user = process.env.SMTP_USER?.trim();
+  const pass = process.env.SMTP_PASS?.replace(/\s/g, "");
   if (!user || !pass) return NextResponse.json({ error: "Email unavailable" }, { status: 503 });
   const transport = nodemailer.createTransport({
     host: "smtp.gmail.com", port: 465, secure: true,
