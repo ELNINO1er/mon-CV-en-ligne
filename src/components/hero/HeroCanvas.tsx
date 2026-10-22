@@ -31,7 +31,7 @@ export function HeroCanvas() {
     let running = true;
 
     // Couleurs lues depuis les variables du thème (mises à jour au changement de thème)
-    const colors = { dot: "237,237,239", line: "160,180,255", grid: "255,255,255" };
+    const colors = { dot: "247,244,236", line: "120,201,156", grid: "247,244,236" };
     const readColors = () => {
       const s = getComputedStyle(document.documentElement);
       colors.dot = s.getPropertyValue("--canvas-dot").trim() || colors.dot;
@@ -100,8 +100,8 @@ export function HeroCanvas() {
           ? [p.pos - p.len, p.line, p.pos, p.line]
           : [p.line, p.pos - p.len, p.line, p.pos];
         const g = ctx.createLinearGradient(x1, y1, x2, y2);
-        g.addColorStop(0, "rgba(79,140,255,0)");
-        g.addColorStop(1, "rgba(103,232,249,0.55)");
+        g.addColorStop(0, `rgba(${colors.line},0)`);
+        g.addColorStop(1, `rgba(${colors.line},0.55)`);
         ctx.strokeStyle = g;
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -115,8 +115,8 @@ export function HeroCanvas() {
       mouse.y += (mouse.ty - mouse.y) * 0.08;
       if (mouse.x > -1000) {
         const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 320);
-        glow.addColorStop(0, "rgba(79,140,255,0.10)");
-        glow.addColorStop(1, "rgba(79,140,255,0)");
+        glow.addColorStop(0, `rgba(${colors.line},0.10)`);
+        glow.addColorStop(1, `rgba(${colors.line},0)`);
         ctx.fillStyle = glow;
         ctx.fillRect(mouse.x - 320, mouse.y - 320, 640, 640);
       }

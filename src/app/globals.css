@@ -4,52 +4,52 @@
    Les valeurs vivent dans :root / [data-theme="light"] ; Tailwind les lit via @theme inline. */
 :root,
 [data-theme="dark"] {
-  --bg: #07080a;
-  --surface: #0d0f13;
-  --elevated: #14171c;
+  --bg: #080e0b;
+  --surface: #101a15;
+  --elevated: #19261f;
   --line: rgb(255 255 255 / 0.07);
   --line-strong: rgb(255 255 255 / 0.13);
-  --fg: #ededef;
-  --muted: #8f95a0;
-  --dim: #5d636d;
-  --brand: #5b8cff;
-  --violet: #9b87ff;
-  --cyan: #3dd9f0;
-  --emerald: #34d399;
-  --amber: #f5a524;
-  --rose: #f472b6;
-  --coral: #fb7a68;
+  --fg: #f7f4ec;
+  --muted: #a4b3a9;
+  --dim: #82978a;
+  --brand: #78c99c;
+  --violet: #a9cbb3;
+  --cyan: #a0d6bc;
+  --emerald: #78c99c;
+  --amber: #e2c58f;
+  --rose: #c4cdb1;
+  --coral: #e8b78b;
   --stroke: rgb(255 255 255 / 0.14);
   --glow: 0.14;
-  --on-accent: #0b0d12;
-  --canvas-dot: 237, 237, 239;
-  --canvas-line: 160, 180, 255;
-  --canvas-grid: 255, 255, 255;
+  --on-accent: #081c12;
+  --canvas-dot: 247, 244, 236;
+  --canvas-line: 120, 201, 156;
+  --canvas-grid: 247, 244, 236;
   color-scheme: dark;
 }
 
 [data-theme="light"] {
-  --bg: #f6f6f3;
-  --surface: #ffffff;
-  --elevated: #efefeb;
+  --bg: #f7f4ec;
+  --surface: #fffdf8;
+  --elevated: #edeedf;
   --line: rgb(12 14 20 / 0.08);
   --line-strong: rgb(12 14 20 / 0.15);
-  --fg: #0c0e14;
-  --muted: #555b66;
-  --dim: #8a909a;
-  --brand: #2f6bff;
-  --violet: #6d4dff;
-  --cyan: #0891b2;
-  --emerald: #059669;
-  --amber: #d97706;
-  --rose: #db2777;
-  --coral: #e2553f;
+  --fg: #14271d;
+  --muted: #516357;
+  --dim: #687c6e;
+  --brand: #174b38;
+  --violet: #426b4f;
+  --cyan: #24634d;
+  --emerald: #176044;
+  --amber: #806331;
+  --rose: #536942;
+  --coral: #9a592f;
   --stroke: rgb(12 14 20 / 0.1);
   --glow: 0.2;
   --on-accent: #ffffff;
-  --canvas-dot: 30, 34, 44;
-  --canvas-line: 47, 107, 255;
-  --canvas-grid: 12, 14, 20;
+  --canvas-dot: 20, 39, 29;
+  --canvas-line: 23, 75, 56;
+  --canvas-grid: 20, 39, 29;
   color-scheme: light;
 }
 
