@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
@@ -59,9 +60,8 @@ export function Header() {
         />
         <div className={cn("container-x relative flex h-16 items-center justify-between gap-3 transition-[height] duration-500 md:h-20", scrolled && "md:h-16")}>
           <Link href={href("/")} className="group flex items-center gap-3" aria-label={`${profile.name} — ${t.nav.home}`}>
-            <span className="relative grid h-9 w-9 place-items-center rounded-lg border border-line-strong bg-surface/80 font-mono text-[13px] font-medium tracking-tight backdrop-blur">
-              RB
-              <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-brand to-violet shadow-[0_0_10px_2px_color-mix(in_srgb,var(--brand)_60%,transparent)]" />
+            <span className="relative block h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-line-strong">
+              <Image src="/brand/rorodev.png" alt="RoroDev" width={44} height={44} priority className="h-full w-full object-cover" />
             </span>
             <span className="hidden text-sm font-medium tracking-tight lg:block">
               Romaric <span className="text-muted">Bombade</span>

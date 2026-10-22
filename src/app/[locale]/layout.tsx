@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   const t = dictionaries[locale].meta;
   return {
     metadataBase: new URL(siteUrl),
+    icons: { icon: "/brand/rorodev.png", apple: "/brand/rorodev.png" },
     title: { default: t.title, template: `%s — ${profile.name}` },
     keywords: ["Full-Stack", "SaaS", "Multi-tenant", "Next.js", "React", "Abidjan", "Côte d'Ivoire", "Romaric Bombade"],
     authors: [{ name: profile.name }],

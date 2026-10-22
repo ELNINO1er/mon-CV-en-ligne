@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { navItems, profile } from "@/data/profile";
 import { useI18n } from "@/i18n/I18nProvider";
 import { LocalTime } from "./LocalTime";
@@ -21,6 +22,10 @@ export function Footer() {
       <div aria-hidden className="absolute left-1/2 top-0 h-40 w-[50vw] -translate-x-1/2 rounded-full bg-violet/10 blur-[90px]" />
       <div className="container-x relative grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
+          <Link href={href("/")} aria-label={`RoroDev — ${t.nav.home}`} className="mb-6 inline-flex items-center gap-3 rounded-xl">
+            <Image src="/brand/rorodev.png" alt="" width={52} height={52} className="rounded-xl" />
+            <span className="text-lg font-semibold tracking-tight">RoroDev</span>
+          </Link>
           <p className="max-w-sm text-2xl font-medium leading-snug tracking-tight">
             {t.footer.tagline} <span className="text-gradient pr-[0.1em] font-serif italic">{t.footer.taglineEm}</span>
           </p>
