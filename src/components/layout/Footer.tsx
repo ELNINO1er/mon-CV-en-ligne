@@ -31,7 +31,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={href(item.href)} className="text-muted transition-colors hover:text-fg">
+                <Link href={href(item.href)} className="link-underline inline-block text-muted transition-colors hover:text-fg">
                   {t.nav[item.key]}
                 </Link>
               </li>
@@ -45,7 +45,7 @@ export function Footer() {
               <li key={s.label}>
                 <a
                   href={s.href}
-                  className="text-muted transition-colors hover:text-fg"
+                  className="link-underline inline-block text-muted transition-colors hover:text-fg"
                   {...(s.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 >
                   {s.label}

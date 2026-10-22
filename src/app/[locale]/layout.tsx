@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "../globals.css";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Cursor } from "@/components/ui/Cursor";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -91,6 +92,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </a>
         <I18nProvider locale={locale}>
           <ThemeSync locale={locale} />
+          <ScrollProgress />
           <SmoothScroll>
             <Header />
             <main id="main">{children}</main>

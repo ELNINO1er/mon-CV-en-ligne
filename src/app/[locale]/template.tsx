@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 /**
  * Transition de page : fondu uniquement. Pas de transform/filter ici —
@@ -12,7 +13,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <motion.div
       initial={reduce ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: DUR.base, ease: EASE_OUT }}
     >
       {children}
     </motion.div>
