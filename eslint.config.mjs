@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "rorodev-logo-motion/**",
     "social-profile-audit/**",
+    "_migration_*/**",
   ]),
 ]);
 

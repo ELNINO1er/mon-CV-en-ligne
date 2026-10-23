@@ -12,6 +12,7 @@
 rorodev-site.zip
 /social-profile-audit/
 /rorodev-logo-motion/
+/_migration_*/
 
 # Env
 .env*

@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "rorodev-logo-motion", "social-profile-audit"]
+  "exclude": ["node_modules", "rorodev-logo-motion", "social-profile-audit", "_migration_*"]
 }
